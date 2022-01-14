@@ -13,7 +13,7 @@ const teambuilding = [
     { price: 221, label: "Teambuilding - 2 hours", link: "https://refreshingmountain.com/activities/teambuilding-2/" },
 ];
 
-export var teambuildingTotalPrice;
+export var teambuildingTotalPrice = 0;
 
 const getFormattedPrice = (price) => `$${price.toFixed(0)}`;
 

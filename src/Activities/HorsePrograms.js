@@ -8,7 +8,7 @@ const horsePrograms = [
     { price: 153, label: "Horse Rides - Tethered", link: "https://refreshingmountain.com/activities/horse-rides/" },
 ];
 
-export var horseProgramsTotalPrice;
+export var horseProgramsTotalPrice = 0;
 
 const getFormattedPrice = (price) => `$${price.toFixed(0)}`;
 

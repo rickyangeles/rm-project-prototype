@@ -15,7 +15,7 @@ const wildlifeCenter = [
     { price: 221, label: "Wilderness Survival (2 hrs.)", link: "" },
 ];
 
-export var wildlifeCenterTotalPrice; 
+export var wildlifeCenterTotalPrice = 0; 
 
 const getFormattedPrice = (price) => `$${price.toFixed(0)}`;
 

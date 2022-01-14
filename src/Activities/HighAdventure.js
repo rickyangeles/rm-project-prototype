@@ -14,7 +14,7 @@ const highAdventure = [
     { price: 153, label: "Rappelling", link: "https://refreshingmountain.com/activities/rappelling/" },
 ];
 
-export var highAdventureTotalPrice;
+export var highAdventureTotalPrice = 0;
 
 const getFormattedPrice = (price) => `$${price.toFixed(0)}`;
 

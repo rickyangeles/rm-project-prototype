@@ -9,7 +9,7 @@ const poolParties = [
     { price: 499, label: "120+ People", link: "https://refreshingmountain.com/activities/pool-parties-private-use/" },
 ]
 
-export var poolPartiesTotalPrice;
+export var poolPartiesTotalPrice = 0;
 
 const getFormattedPrice = (price) => `$${price.toFixed(0)}`;
 

@@ -47,7 +47,7 @@ class FormApp extends React.Component {
         return (
             <div>
                 <Container fluid="lg">
-                    <h1 style={{ textAlign: 'center' }}>Heading for Form</h1>
+                    <h1 style={{ textAlign: 'center' }}>Submit Inquiry for Offical Quote</h1>
                     <br/>
                     <br/>
                     <Form onSubmit={this.onClicking}>

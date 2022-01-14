@@ -39,7 +39,7 @@ class RetreatTypeApp extends React.Component {
                                 <Form.Group as={Col} controlId="retreat-type">
                                     <Form.Label>Select Group Type</Form.Label>
                                     <Form.Control as="select" onChange={this.onTypeChange.bind(this)}>
-                                        <option id="type">Retreat Type:</option>
+                                        <option id="type">Group Type:</option>
                                         <option defaultValue id="day">Day Group</option>
                                         <option id="overnight">Overnight Group</option>
                                     </Form.Control>

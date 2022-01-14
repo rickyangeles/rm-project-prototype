@@ -1,27 +1,7 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import './Activities.css';
 import { constHours, medianSize } from '../RetreatSelection/RetreatSize';
 import { isOvernight } from '../RetreatSelection/RetreatType';
-
-
-
-
-const baseRESTURL = 'https://refreshingmountain.com/wp-json/wp/v2/activities/';
-function getActivityInfo(id) {
-    let restURL = baseRESTURL + id; 
-
-
-    axios.get(restURL)
-  .then(response => {
-    console.log(response.data.acf);
-  })
-  .catch(error => {
-    console.log('Error fetching and parsing data', error);
-  });
-};
-
-console.log(getActivityInfo(18712));
 
 const genRec = [
     { price: 88, label: "Archery", link: "https://refreshingmountain.com/activities/archery/", desc: "test" },
@@ -32,8 +12,6 @@ const genRec = [
     { price: 153, label: "Pedal Carts", link: "https://refreshingmountain.com/activities/pedal-carts/", desc: "test"  },
     { price: 88, label: "Slingshots", link: "https://refreshingmountain.com/activities/sling-shots-4/", desc: "test"  },
 ];
-
-
 
 export var genRecTotalPrice = 0;
 
@@ -123,8 +101,7 @@ function GeneralActivitiesApp() {
                                 onChange={() => handleOnChange(index)}
                             />
                             <label>
-                                <a href={link}>{label}</a> <span>${price}/PER</span>
-                                <p>{desc}</p>
+                                <a href={link} target="_blank">{label}</a> <span>${price}/PER</span>
                             </label>
                         </li>
                     );
