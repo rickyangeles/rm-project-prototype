@@ -42,7 +42,7 @@ function HorseProgramsApp() {
 
     if ( constHours !== "" && medianSize < 80 ) {
         return (
-            <div className="single-activity-section" id="highAdv">
+            <div className="single-activity-section" id="horsePro">
                 <ActivityHeader
                     title="Horse Program Activities"
                     total={'$' +  horseProgramstotalSum} 

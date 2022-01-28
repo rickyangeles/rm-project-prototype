@@ -45,7 +45,7 @@ function TeambuildingApp() {
 
     if ( constHours !== "" && medianSize < 80 ) {
         return (
-            <div className="single-activity-section" id="highAdv">
+            <div className="single-activity-section" id="teamBuild">
                 <ActivityHeader
                     title="Team Building Activities"
                     total={'$' +  teamBuildingtotalSum} 
