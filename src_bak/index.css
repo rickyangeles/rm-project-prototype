@@ -91,11 +91,11 @@ code {
     margin-bottom: 0;
 }
 
-.estimate-sidebar a:not(.click-price-btn) {
+.estimate-sidebar a {
     color: #5A5A5A;
 }
 
-.estimate-sidebar a:not(.click-price-btn):hover {
+.estimate-sidebar a:hover {
     color: #5A5A5A;
     text-decoration: underline;
 }
@@ -119,7 +119,7 @@ code {
 
 .single-activity-header .activity-name {
     width: 65%;
-    padding: 1.65em 2em;
+    padding: 0 2em;
 }
 
 .single-activity-header .activity-per-person {
@@ -243,20 +243,4 @@ input[type='checkbox'] {
 .sidebar > div {
     position: sticky;
     top: 20px;
-}
-
-.activity-detail {
-    margin: 2em 0;
-    background-color: #f6f6f6;
-    padding: 2em;
-}
-
-.click-price-btn {
-    color: white;
-    font-weight: bold;
-}
-
-.click-price-btn:hover {
-    color: white;
-    text-decoration: none;
 }
