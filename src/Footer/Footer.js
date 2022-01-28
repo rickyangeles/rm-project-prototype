@@ -7,6 +7,7 @@ import './Footer.css';
 import { teambuildingTotalPrice } from '../Activities/Teambuilding';
 import { poolPartiesTotalPrice } from '../Activities/PoolParties';
 import {AppContext} from '../AppContext'
+import { groupType } from '../RetreatSelection/RetreatType';
 
 function getFormattedPrice(price) {
     return `${price.toFixed(2)}`;
@@ -15,7 +16,7 @@ function getFormattedPrice(price) {
 let sideBarClass = 'estimate-sidebar';
 function FooterApp() {
     const context = useContext(AppContext);
-    const {constHours, medianSize, highAdventuretotalSum, generalRecreationtotalSum, wildLifetotalSum, teamBuildingtotalSum, horseProgramstotalSum, poolPartytotalSum } = context;
+    const {groupSize, constHours, medianSize, highAdventuretotalSum, generalRecreationtotalSum, wildLifetotalSum, teamBuildingtotalSum, horseProgramstotalSum, poolPartytotalSum } = context;
 
     const [totalPrice, setTotalPrice] = useState(0);
 
@@ -85,15 +86,16 @@ function FooterApp() {
                         <div>
                             <a href=
                                 { 
-                                'https://refreshingmountain.com/?page_id=30010' +
-                                '&highAdv='     + highAdventuretotalSum +
-                                '&teamBld='     + teamBuildingtotalSum +
-                                '&wildLife='    + wildLifetotalSum +
-                                '&horsePrg='    + horseProgramstotalSum +
-                                '&genRec='      + generalRecreationtotalSum +
-                                '&poolPrty='    + poolPartytotalSum +
-                                '&total='       + totalPrice
-                            
+                                    'https://refreshingmountain.com/day-activity-calculator-results/?' +
+                                    'size='         + groupSize +
+                                    '&type='        + groupType +
+                                    '&highAdv='     + highAdventuretotalSum +
+                                    '&teamBld='     + teamBuildingtotalSum +
+                                    '&wildLife='    + wildLifetotalSum +
+                                    '&horsePrg='    + horseProgramstotalSum +
+                                    '&genRec='      + generalRecreationtotalSum +
+                                    '&poolPrty='    + poolPartytotalSum +
+                                    '&total='       + totalPrice
                                 } 
                                 
                                 className="click-price-btn">Send Copy</a>
