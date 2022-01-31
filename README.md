@@ -2,7 +2,13 @@
 - [x] Visual Overhaul
 - [x] Sticky Sidebar
 - [x] Link sidebar section line to their own section
-- [ ] Set a default price for each activity, using day group pricing
-- [ ] Make sidebar pricing update for each individual section, as the user selects activities 
-- [ ] Make sidebar total pricing update as the user selects activities
+- [x] Set a default price for each activity, using day group pricing
+- [x] Make sidebar pricing update for each individual section, as the user selects activities 
+- [x] Make sidebar total pricing update as the user selects activities
 - [ ] Bring in the data from the ACF REST API into each activity (Price, Desc, Link);
+- [x] Make submit button add parameters based on the values selected. For Gravity Form use
+- [ ] Pull in section description from custom field yet to be created
+- [x] Make the activities in each section show pricing as soon as Group Type is selected, hide otherwise
+- [x] Grey out the activity sections instead of hiding it. 
+- [x] Make the itemized total be the group prizing instead of per person
+- [ ] Make the link pull in each activity selected from each section instead of just the section subtotal
