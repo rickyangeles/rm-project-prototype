@@ -5,6 +5,8 @@ import './App.css';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+import axios from 'axios';
+
 import HeadingApp from './RetreatSelection/Heading';
 import RetreatSizeApp from './RetreatSelection/RetreatSize';
 import RetreatTypeApp from './RetreatSelection/RetreatType';
@@ -40,6 +42,28 @@ function App() {
     const [horseProgramstotalSum,       setHorseProgramstotalSum] = useState("");
     const [poolPartytotalSum,           setPoolPartytotalSum] = useState("");
 
+    
+    const [highAdventuretotalGroupSum,      setHighAdventuretotalGroupSum] = useState(0);
+    const [generalRecreationtotalGroupSum,  setGeneralRecreationtotalGroupSum] = useState(0);
+    const [wildLifetotalGroupSum,           setWildLifetotalGroupSum] = useState(0);
+    const [teamBuildingtotalGroupSum,       setTeamBuildingtotalGroupSum] = useState(0);
+    const [horseProgramstotalGroupSum,      setHorseProgramstotalGroupSum] = useState(0);
+    const [poolPartytotalGroupSum,          setPoolPartytotalGroupSum] = useState(0);
+
+    const [totalGroupPrice,                      setTotalGroupPrice] = useState(0);
+
+
+    const highAdventureArray = [{key:0,  price: 267, label: "2 Ziplines - Flying V", link: "https://refreshingmountain.com/activities/2-ziplines-the-flying-v-run/" },
+    {key:1,  price: 537, label: "5 Ziplines + 9 Obstacles", link: "https://refreshingmountain.com/activities/5-ziplines-and-high-ropes-the-challenge-adventure-run/" },
+    {key:2, price: 199, label: "Climbing Tower (Outdoor)", link: "https://refreshingmountain.com/activities/climbing-tower-outdoor/" },
+    {key:3, price: 128, label: "Climbing Tower (Indoor)", link: "https://refreshingmountain.com/activities/indoor-climbing-wall/" },
+    {key:4, price: 267, label: "22 Elevated Obstacles", link: "https://refreshingmountain.com/activities/elevated-obstacle-course-2/" },
+    {key:5, price: 153, label: "Giant Ladder", link: "https://refreshingmountain.com/activities/giant-ladder/" },
+    {key:6, price: 153, label: "Giant Swing", link: "https://refreshingmountain.com/activities/giant-swing/" },
+    {key:7, price: 153, label: "Rappelling", link: "https://refreshingmountain.com/activities/rappelling/" }];
+
+    const [highAdventure,            setHighAdventure] = useState(highAdventureArray);
+
 
     const initialValue = {
         groupSize,
@@ -55,7 +79,18 @@ function App() {
         wildLifetotalSum,           setWildLifetotalSum,
         teamBuildingtotalSum,       setTeamBuildingtotalSum,
         horseProgramstotalSum,      setHorseProgramstotalSum,
-        poolPartytotalSum,           setPoolPartytotalSum
+        poolPartytotalSum,          setPoolPartytotalSum,
+        
+        highAdventuretotalGroupSum,      setHighAdventuretotalGroupSum,
+        generalRecreationtotalGroupSum,  setGeneralRecreationtotalGroupSum,
+        wildLifetotalGroupSum,           setWildLifetotalGroupSum,
+        teamBuildingtotalGroupSum,       setTeamBuildingtotalGroupSum,
+        horseProgramstotalGroupSum,      setHorseProgramstotalGroupSum,
+        poolPartytotalGroupSum,          setPoolPartytotalGroupSum,
+
+
+        totalGroupPrice,                      setTotalGroupPrice,
+        highAdventure,                  setHighAdventure
     }
 
     return (

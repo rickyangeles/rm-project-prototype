@@ -3,7 +3,6 @@ import './Activities.css';
 import { AppContext } from '../AppContext';
 import { isOvernight } from '../RetreatSelection/RetreatType';
 import ActivityHeader from './ActivityHeader';
-import ActivityItem from './ActivityItem';
 
 const teambuilding = [
     { key:0, price: 230, label: "Escape Room (max of 10)", link: "https://refreshingmountain.com/activities/escape-room-ranch/" },
@@ -18,7 +17,7 @@ const teambuilding = [
 
 function TeambuildingApp() {
     const context = useContext(AppContext);
-    const {constHours, medianSize, teamBuildingtotalSum, setTeamBuildingtotalSum } = context;
+    const {constHours, medianSize, groupType, teamBuildingtotalSum, setTeamBuildingtotalSum, teamBuildingtotalGroupSum, setTeamBuildingtotalGroupSum, } = context;
 
     const [checkedState, setCheckedState] = useState(
         new Array(teambuilding.length).fill(false)
@@ -40,10 +39,11 @@ function TeambuildingApp() {
     );
 
     useEffect(()=> {
-        setTeamBuildingtotalSum( _teamBuildingtotalSum)
+        setTeamBuildingtotalSum(_teamBuildingtotalSum)
+        setTeamBuildingtotalGroupSum((_teamBuildingtotalSum * medianSize))
     }, [ _teamBuildingtotalSum])
 
-    if ( constHours !== "" && medianSize < 80 ) {
+    if ( groupType !== "" && medianSize !== 80 ) {
         return (
             <div className="single-activity-section" id="teamBuild">
                 <ActivityHeader

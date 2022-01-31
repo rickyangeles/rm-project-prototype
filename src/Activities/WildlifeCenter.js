@@ -3,7 +3,6 @@ import './Activities.css';
 import { AppContext } from '../AppContext';
 import { isOvernight } from '../RetreatSelection/RetreatType';
 import ActivityHeader from './ActivityHeader';
-import ActivityItem from './ActivityItem';
 
 const wildlifeCenter = [
     { key:0, price: 138, label: "Birds of Prey", link: "https://refreshingmountain.com/activities/birds-of-prey/" },
@@ -20,7 +19,7 @@ const wildlifeCenter = [
 
 function WildlifeCenterApp() {
     const context = useContext(AppContext);
-    const {constHours, medianSize, wildLifetotalSum, setWildLifetotalSum, } = context;
+    const {constHours, medianSize, groupType, wildLifetotalSum, setWildLifetotalSum, wildLifetotalGroupSum, setWildLifetotalGroupSum } = context;
 
     const [checkedState, setCheckedState] = useState(
         new Array(wildlifeCenter.length).fill(false)
@@ -50,10 +49,11 @@ function WildlifeCenterApp() {
 
     useEffect(()=> {
         setWildLifetotalSum(_wildLifetotalSum)
+        setWildLifetotalGroupSum((_wildLifetotalSum * medianSize))
     }, [_wildLifetotalSum])
 
 
-    if ( constHours !== "" && medianSize < 80 ) {
+    if ( groupType !== "" && medianSize !== 80 ) {
         return (
             <>
             <div className="single-activity-section" id="wildlife">

@@ -3,7 +3,6 @@ import './Activities.css';
 import { AppContext } from '../AppContext';
 import { isOvernight } from '../RetreatSelection/RetreatType';
 import ActivityHeader from './ActivityHeader';
-import ActivityItem from './ActivityItem';
 //export var genRecTotalPrice = 0;
 
 
@@ -20,7 +19,7 @@ const genRec = [
 function GeneralRecreationApp() {
 
     const context = useContext(AppContext);
-    const {constHours, medianSize, generalRecreationtotalSum, setGeneralRecreationtotalSum, } = context;
+    const {constHours, medianSize, groupType, generalRecreationtotalSum, setGeneralRecreationtotalSum, generalRecreationtotalGroupSum, setGeneralRecreationtotalGroupSum } = context;
 
     const [checkedState, setCheckedState] = useState(
         new Array(genRec.length).fill(false)
@@ -43,10 +42,10 @@ function GeneralRecreationApp() {
 
     useEffect(()=> {
         setGeneralRecreationtotalSum(_generalRecreationtotalSum)
+        setGeneralRecreationtotalGroupSum((_generalRecreationtotalSum * medianSize))
     }, [_generalRecreationtotalSum])
 
-
-    if ( constHours !== "" && medianSize < 80 ) {
+    if ( groupType !== "" && medianSize !== 80 ) {
         return (
             <>
                 <div className="single-activity-section" id="genRec">

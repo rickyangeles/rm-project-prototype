@@ -3,7 +3,6 @@ import './Activities.css';
 import { AppContext } from '../AppContext';
 import { isOvernight } from '../RetreatSelection/RetreatType';
 import ActivityHeader from './ActivityHeader';
-import ActivityItem from './ActivityItem';
 
 const horsePrograms = [
     { key: 0, price: 111, label: "Farm Animal Experience", link: "https://refreshingmountain.com/activities/farm-animal-experience/" },
@@ -14,7 +13,7 @@ const horsePrograms = [
 function HorseProgramsApp() {
 
     const context = useContext(AppContext);
-    const {constHours, medianSize, horseProgramstotalSum, setHorseProgramstotalSum } = context;
+    const {constHours, medianSize, groupType, horseProgramstotalSum, setHorseProgramstotalSum, horseProgramstotalGroupSum, setHorseProgramstotalGroupSum  } = context;
 
     const [checkedState, setCheckedState] = useState(
         new Array(horsePrograms.length).fill(false)
@@ -38,9 +37,10 @@ function HorseProgramsApp() {
 
     useEffect(()=> {
         setHorseProgramstotalSum(_horseProgramsTotalSum)
+        setHorseProgramstotalGroupSum((_horseProgramsTotalSum * medianSize))
     }, [_horseProgramsTotalSum])
 
-    if ( constHours !== "" && medianSize < 80 ) {
+    if ( groupType !== "" && medianSize !== 80 ) {
         return (
             <div className="single-activity-section" id="horsePro">
                 <ActivityHeader

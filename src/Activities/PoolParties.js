@@ -3,7 +3,6 @@ import './Activities.css';
 import { AppContext } from '../AppContext';
 import { isOvernight } from '../RetreatSelection/RetreatType';
 import ActivityHeader from './ActivityHeader';
-import ActivityItem from './ActivityItem';
 
 const poolParties = [
     { key: 0, price: 319, label: "< 60 People", link: "https://refreshingmountain.com/activities/pool-parties-private-use/" },
@@ -15,7 +14,7 @@ const poolParties = [
 function PoolPartiesApp() {
     
     const context = useContext(AppContext);
-    const {constHours, medianSize, poolPartytotalSum, setPoolPartytotalSum } = context;
+    const {constHours, medianSize, groupType, poolPartytotalSum, setPoolPartytotalSum, poolPartytotalGroupSum, setPoolPartytotalGroupSum } = context;
 
     const [checkedState, setCheckedState] = useState(
         new Array(poolParties.length).fill(false)
@@ -38,9 +37,10 @@ function PoolPartiesApp() {
 
     useEffect(()=> {
         setPoolPartytotalSum(_poolPartytotalSum)
+        setPoolPartytotalGroupSum((_poolPartytotalSum * medianSize))
     }, [_poolPartytotalSum])
 
-    if ( constHours !== "" && medianSize < 80 ) {
+    if ( groupType !== "" && medianSize !== 80 ) {
         return (
             <>
                 <div className="single-activity-section" id="pool">

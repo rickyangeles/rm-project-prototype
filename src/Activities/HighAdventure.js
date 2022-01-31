@@ -3,26 +3,26 @@ import './Activities.css';
 import { AppContext } from '../AppContext';
 import { isOvernight } from '../RetreatSelection/RetreatType';
 import ActivityHeader from './ActivityHeader';
-import ActivityItem from './ActivityItem';
 
-const highAdventure = [
-    {key:0,  price: 267, label: "2 Ziplines - Flying V", link: "https://refreshingmountain.com/activities/2-ziplines-the-flying-v-run/" },
-    {key:1,  price: 537, label: "5 Ziplines + 9 Obstacles", link: "https://refreshingmountain.com/activities/5-ziplines-and-high-ropes-the-challenge-adventure-run/" },
-    {key:2, price: 199, label: "Climbing Tower (Outdoor)", link: "https://refreshingmountain.com/activities/climbing-tower-outdoor/" },
-    {key:3, price: 128, label: "Climbing Tower (Indoor)", link: "https://refreshingmountain.com/activities/indoor-climbing-wall/" },
-    {key:4, price: 267, label: "22 Elevated Obstacles", link: "https://refreshingmountain.com/activities/elevated-obstacle-course-2/" },
-    {key:5, price: 153, label: "Giant Ladder", link: "https://refreshingmountain.com/activities/giant-ladder/" },
-    {key:6, price: 153, label: "Giant Swing", link: "https://refreshingmountain.com/activities/giant-swing/" },
-    {key:7, price: 153, label: "Rappelling", link: "https://refreshingmountain.com/activities/rappelling/" },
-];
+// const highAdventure = [
+//     {key:0,  price: 267, label: "2 Ziplines - Flying V", link: "https://refreshingmountain.com/activities/2-ziplines-the-flying-v-run/" },
+//     {key:1,  price: 537, label: "5 Ziplines + 9 Obstacles", link: "https://refreshingmountain.com/activities/5-ziplines-and-high-ropes-the-challenge-adventure-run/" },
+//     {key:2, price: 199, label: "Climbing Tower (Outdoor)", link: "https://refreshingmountain.com/activities/climbing-tower-outdoor/" },
+//     {key:3, price: 128, label: "Climbing Tower (Indoor)", link: "https://refreshingmountain.com/activities/indoor-climbing-wall/" },
+//     {key:4, price: 267, label: "22 Elevated Obstacles", link: "https://refreshingmountain.com/activities/elevated-obstacle-course-2/" },
+//     {key:5, price: 153, label: "Giant Ladder", link: "https://refreshingmountain.com/activities/giant-ladder/" },
+//     {key:6, price: 153, label: "Giant Swing", link: "https://refreshingmountain.com/activities/giant-swing/" },
+//     {key:7, price: 153, label: "Rappelling", link: "https://refreshingmountain.com/activities/rappelling/" },
+// ];
 
 //const getFormattedPrice = (price) => `$${price.toFixed(0)}`;
 
 function HighAdventureApp() {
 
     const context = useContext(AppContext);
-    const {constHours, medianSize, highAdventuretotalSum, setHighAdventuretotalSum, } = context;
-
+    const {highAdventure, constHours, medianSize, groupType, highAdventuretotalSum, setHighAdventuretotalSum, highAdventuretotalGroupSum, setHighAdventuretotalGroupSum} = context;
+    
+    
     const [checkedState, setCheckedState] = useState(
         new Array(highAdventure.length).fill(false)
     );
@@ -44,10 +44,11 @@ function HighAdventureApp() {
 
     useEffect(()=> {
         setHighAdventuretotalSum(_highAdventuretotalSum)
+        setHighAdventuretotalGroupSum((_highAdventuretotalSum * medianSize))
     }, [_highAdventuretotalSum])
 
 
-    if ( constHours !== "" && medianSize < 80 ) {
+    if ( groupType !== "" && medianSize !== 80 ) {
         return (
             <>
             <div className="single-activity-section" id="highAdv">
@@ -74,6 +75,8 @@ function HighAdventureApp() {
                             newPrice = 0;
                         }
                         highAdventure[key].newPrice = newPrice;
+                        highAdventure[key].checked = newPrice;
+    
                         
                         return (
                             <li key={index}>
@@ -92,7 +95,7 @@ function HighAdventureApp() {
                                     <a href={link}>{label}</a> <span>${newPrice}/PER</span>
                                     <p>{desc}</p>
                                 </label>
-                        </li>
+                            </li>
                         );
                     })}
                 </ul>
