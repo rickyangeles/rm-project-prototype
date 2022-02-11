@@ -8,7 +8,6 @@ export var groupType = "";
 
 const RetreatTypeApp = () => {
     const context = useContext(AppContext);
-    console.log('context2', context)
     const onTypeChange = (e) => {
         context.setGroupType(e.target.value)
         constType = e.target.value; 

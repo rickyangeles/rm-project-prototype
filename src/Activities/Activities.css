@@ -6,3 +6,7 @@ ul.no-bullets {
 h3.heading-style {
     text-align: left;
 }
+
+.nothing-selected-alert h2 {
+    color: red;
+}

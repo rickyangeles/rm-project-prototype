@@ -1,56 +1,69 @@
 import React, { useEffect, useMemo, useState, useContext } from 'react';
+import axios from 'axios';
 import './Activities.css';
 import { AppContext } from '../AppContext';
 import { isOvernight } from '../RetreatSelection/RetreatType';
 import ActivityHeader from './ActivityHeader';
 
-const wildlifeCenter = [
-    { key:0, price: 138, label: "Birds of Prey", link: "https://refreshingmountain.com/activities/birds-of-prey/" },
-    { key:1, price: 203, label: "Large Group Presentation", link: "https://refreshingmountain.com/activities/large-group-reptile-and-amphibian-presentation/" },
-    { key:2, price: 111, label: "Pond and Stream", link: "" },
-    { key:3, price: 111, label: "Reptiles and Amphibians", link: "" },
-    { key:4, price: 138, label: "Toxic Plants and Animals", link: "" },
-    { key:5, price: 111, label: "Wildlife of PA", link: "" },
-    { key:6, price: 111, label: "Wildlife Center OPEN TIME", link: "https://refreshingmountain.com/activities/wildlife-center-free-time/" },
-    { key:7, price: 138, label: "Wilderness Survival (1 hr.)", link: "" },
-    { key:8, price: 221, label: "Wilderness Survival (2 hrs.)", link: "" },
-];
-
 
 function WildlifeCenterApp() {
     const context = useContext(AppContext);
-    const {constHours, medianSize, groupType, wildLifetotalSum, setWildLifetotalSum, wildLifetotalGroupSum, setWildLifetotalGroupSum } = context;
+    const {constHours, medianSize, groupType, 
+        wildLife, setWildLife,
+        wildLifetotalSum, setWildLifetotalSum, 
+        wildLifetotalGroupSum, setWildLifetotalGroupSum,
+        selectedWildLifeItems, setSelectedWildLifeItems,
+    } = context;
+    const [wildLifeDesc, setWildLifeDesc] = useState(0);
+
+
+    useEffect(() => {
+        //Call to get the activties for this category
+        axios.get('https://refreshingmountain.com/wp-json/wp/v2/activities?per_page=100&activity_group_size=702&_fields[]=id&_fields[]=title&_fields[]=acf.price&_fields[]=acf.hide_in_app&_fields[]=link')
+        .then(res => {
+            setWildLife(res.data);
+        })
+        .catch((error) => {
+            console.log(error)
+        }); 
+
+        //Getting Category Description from Website
+        axios.get('https://refreshingmountain.com/wp-json/wp/v2/activity_group_size/702')
+        .then(res => {
+            setWildLifeDesc(res.data.description);
+        });
+        
+    }, [])
 
     const [checkedState, setCheckedState] = useState(
-        new Array(wildlifeCenter.length).fill(false)
+        new Array(wildLife.length).fill(false)
     );
-
-    // useEffect(()=>{
-    //     axios.get(`https://refreshingmountain.com/wp-json/wp/v2/activities?include=18712,18755,18746,18744,18708,18714`)
-    //     .then(res => {
-    //         setwildlifeCenter(res.data)
-           
-    //     })
-    // }, [])
     const _wildLifetotalSum = useMemo(
         () =>
           Object.entries(checkedState).reduce(
             (accumulator, [key, value]) =>
-              value
+              value  
                 ? accumulator +
-                wildlifeCenter.find(
-                    (subscriber) => subscriber.key + "" === key
-                  ).newPrice
+                wildLife.find(
+                    (subscriber) => subscriber.id + "" === key
+                  )?.newPrice
                 : accumulator,
             0
           ),
         [checkedState]
     );
 
+    
+
+
     useEffect(()=> {
         setWildLifetotalSum(_wildLifetotalSum)
-        setWildLifetotalGroupSum((_wildLifetotalSum * medianSize))
-    }, [_wildLifetotalSum])
+        if ( groupType === 'overnight' ) {
+            setWildLifetotalGroupSum((_wildLifetotalSum * medianSize) * 0.75)
+        } else {
+            setWildLifetotalGroupSum((_wildLifetotalSum * medianSize))
+        }
+    }, [_wildLifetotalSum, medianSize, groupType])
 
 
     if ( groupType !== "" && medianSize !== 80 ) {
@@ -61,45 +74,63 @@ function WildlifeCenterApp() {
                     title="Wildlife Activities" 
                     total={'$' +  wildLifetotalSum} 
                 />
-                <p className="single-activity-description">Nunc interdum lacus sit amet orci. Quisque id mi. Maecenas ullamcorper, dui et placerat feugiat, eros pede varius nisi, condimentum viverra felis nunc et lorem. Pellentesque commodo eros a enim.</p>
+                <p className="single-activity-description">
+                    { wildLifeDesc }
+                </p>
                 <ul className="no-bullets">
-                    {wildlifeCenter.map(({ price, label, link, desc, key }, index) => {
+                {wildLife.map(({ id, title, acf, link  }, index) => {
                         let newPrice = 0;
+                        let newTitle = title.rendered;
+                        
                         if (constHours !== "" && medianSize !== "" && isOvernight !== "") {
                             if (isOvernight === false) {
                                 //console.log(genRec[index].label);
-                                newPrice = Math.round((price * constHours) / medianSize);
+                                newPrice = Math.round((acf.price * constHours) / medianSize);
                             }
                             else if (isOvernight === true) {
                                 //console.log(genRec[index].label);
-                                newPrice = Math.round(((price * constHours) / medianSize) * 0.75);
+                                newPrice = Math.round(((acf.price * constHours) / medianSize) * 0.75);
                             } else if (isOvernight === null) {
                                 newPrice = 0;
                             }
                         }else {
                             newPrice = 0;
                         }
-                        wildlifeCenter[key].newPrice = newPrice;
+                        let adminTitle = newTitle + ' (' + newPrice + '/PER)';
+
+                        wildLife[index].newPrice = newPrice;
+                        if ( acf.hide_in_app === false ) { 
                         
-                        return (
-                            <li key={index}>
-                                <input
-                                    className='ck'
-                                    type="checkbox"
-                                    defaultChecked={!!checkedState[index]}
-                                    onChange={() => {
-                                    setCheckedState({
-                                        ...checkedState,
-                                        [index]: !checkedState[index]
-                                        });
-                                    }}
-                                />
-                                <label>
-                                    <a href={link}>{label}</a> <span>${newPrice}/PER</span>
-                                    <p>{desc}</p>
-                                </label>
-                        </li>
-                        );
+                            return (
+                                <li key={id}>
+                                    <input
+                                        className='ck'
+                                        type="checkbox"
+                                        defaultChecked={!!checkedState[index]}
+                                        onChange={() => {
+                                            setCheckedState({
+                                                ...checkedState,
+                                                [id]: !checkedState[id]
+                                            });
+
+                                            if (!checkedState[id]  ){
+                                                let _items = selectedWildLifeItems?.WildLife ?? [];
+                                                _items.push(adminTitle)
+                                                setSelectedWildLifeItems({
+                                                    ...selectedWildLifeItems,
+                                                    WildLife: _items
+                                                })
+                                            }
+                                            
+                                        }}
+                                    />
+                                    <label>
+                                        <a href={link}>{newTitle}</a> <span>${newPrice}/PER</span>
+                                        {/* <p>{desc}</p> */}
+                                    </label>
+                                </li>
+                            );
+                        }
                     })}
                 </ul>
             </div>

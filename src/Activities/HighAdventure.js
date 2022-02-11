@@ -3,25 +3,35 @@ import './Activities.css';
 import { AppContext } from '../AppContext';
 import { isOvernight } from '../RetreatSelection/RetreatType';
 import ActivityHeader from './ActivityHeader';
+import axios from 'axios';
 
-// const highAdventure = [
-//     {key:0,  price: 267, label: "2 Ziplines - Flying V", link: "https://refreshingmountain.com/activities/2-ziplines-the-flying-v-run/" },
-//     {key:1,  price: 537, label: "5 Ziplines + 9 Obstacles", link: "https://refreshingmountain.com/activities/5-ziplines-and-high-ropes-the-challenge-adventure-run/" },
-//     {key:2, price: 199, label: "Climbing Tower (Outdoor)", link: "https://refreshingmountain.com/activities/climbing-tower-outdoor/" },
-//     {key:3, price: 128, label: "Climbing Tower (Indoor)", link: "https://refreshingmountain.com/activities/indoor-climbing-wall/" },
-//     {key:4, price: 267, label: "22 Elevated Obstacles", link: "https://refreshingmountain.com/activities/elevated-obstacle-course-2/" },
-//     {key:5, price: 153, label: "Giant Ladder", link: "https://refreshingmountain.com/activities/giant-ladder/" },
-//     {key:6, price: 153, label: "Giant Swing", link: "https://refreshingmountain.com/activities/giant-swing/" },
-//     {key:7, price: 153, label: "Rappelling", link: "https://refreshingmountain.com/activities/rappelling/" },
-// ];
-
-//const getFormattedPrice = (price) => `$${price.toFixed(0)}`;
 
 function HighAdventureApp() {
-
     const context = useContext(AppContext);
-    const {highAdventure, constHours, medianSize, groupType, highAdventuretotalSum, setHighAdventuretotalSum, highAdventuretotalGroupSum, setHighAdventuretotalGroupSum} = context;
-    
+    const {constHours, medianSize, groupType, 
+        highAdventure, setHighAdventure, 
+        highAdventuretotalSum, setHighAdventuretotalSum, 
+        highAdventuretotalGroupSum, setHighAdventuretotalGroupSum,
+        selectedHighAdventureItems, setSelectedHighAdventureItems, 
+    } = context;    
+    const [highAdventureDesc, setHighAdventureDesc] = useState(0);
+
+
+    useEffect(() => {
+        //Call to get the activties for this category
+        axios.get('https://refreshingmountain.com/wp-json/wp/v2/activities?per_page=100&activity_group_size=700&_fields[]=id&_fields[]=title&_fields[]=acf.price&_fields[]=acf.hide_in_app&_fields[]=link')
+        .then(res => {
+            setHighAdventure(res.data);
+        })
+        .catch((error) => {
+            console.log(error)
+        }); 
+        //Getting Category Description from Website
+        axios.get('https://refreshingmountain.com/wp-json/wp/v2/activity_group_size/700')
+        .then(res => {
+            setHighAdventureDesc(res.data.description);
+        });
+    }, [])
     
     const [checkedState, setCheckedState] = useState(
         new Array(highAdventure.length).fill(false)
@@ -31,21 +41,26 @@ function HighAdventureApp() {
         () =>
           Object.entries(checkedState).reduce(
             (accumulator, [key, value]) =>
-              value
+              value 
                 ? accumulator +
                 highAdventure.find(
-                    (subscriber) => subscriber.key + "" === key
-                  ).newPrice
+                    (subscriber) => subscriber.id + "" === key
+                  )?.newPrice
                 : accumulator,
             0
           ),
         [checkedState]
     );
 
+    //Updating Pricing, Single and Group
     useEffect(()=> {
         setHighAdventuretotalSum(_highAdventuretotalSum)
-        setHighAdventuretotalGroupSum((_highAdventuretotalSum * medianSize))
-    }, [_highAdventuretotalSum])
+        if ( groupType === 'overnight' ) {
+            setHighAdventuretotalGroupSum((_highAdventuretotalSum * medianSize) * 0.75)
+        } else {
+            setHighAdventuretotalGroupSum((_highAdventuretotalSum * medianSize))
+        }
+    }, [_highAdventuretotalSum, medianSize, groupType])
 
 
     if ( groupType !== "" && medianSize !== 80 ) {
@@ -54,49 +69,67 @@ function HighAdventureApp() {
             <div className="single-activity-section" id="highAdv">
                 <ActivityHeader
                     title="High Adventure Activities"
-                    total={'$' +  highAdventuretotalSum} 
+                    total={'$' +  highAdventuretotalSum } 
                 />
-                <p className="single-activity-description">Nunc interdum lacus sit amet orci. Quisque id mi. Maecenas ullamcorper, dui et placerat feugiat, eros pede varius nisi, condimentum viverra felis nunc et lorem. Pellentesque commodo eros a enim.</p>
+                <p className="single-activity-description">
+                    {  highAdventureDesc }
+                </p>
                 <ul className="no-bullets">
-                    {highAdventure.map(({ price, label, link, desc, key }, index) => {
+                    {highAdventure.map(({ id, title, acf, link  }, index) => {
                         let newPrice = 0;
+                        let newTitle = title.rendered;
+                        
                         if (constHours !== "" && medianSize !== "" && isOvernight !== "") {
                             if (isOvernight === false) {
                                 //console.log(genRec[index].label);
-                                newPrice = Math.round((price * constHours) / medianSize);
+                                newPrice = Math.round((acf.price * constHours) / medianSize);
                             }
                             else if (isOvernight === true) {
                                 //console.log(genRec[index].label);
-                                newPrice = Math.round(((price * constHours) / medianSize) * 0.75);
+                                newPrice = Math.round(((acf.price * constHours) / medianSize) * 0.75);
                             } else if (isOvernight === null) {
                                 newPrice = 0;
                             }
                         }else {
                             newPrice = 0;
                         }
-                        highAdventure[key].newPrice = newPrice;
-                        highAdventure[key].checked = newPrice;
-    
-                        
-                        return (
-                            <li key={index}>
-                                <input
-                                    className='ck'
-                                    type="checkbox"
-                                    defaultChecked={!!checkedState[index]}
-                                    onChange={() => {
-                                    setCheckedState({
-                                        ...checkedState,
-                                        [index]: !checkedState[index]
-                                        });
-                                    }}
-                                />
-                                <label>
-                                    <a href={link}>{label}</a> <span>${newPrice}/PER</span>
-                                    <p>{desc}</p>
-                                </label>
-                            </li>
-                        );
+                        let adminTitle = newTitle + ' (' + newPrice + '/PER)';
+                        highAdventure[index].newPrice = newPrice;
+                        if ( acf.hide_in_app === false ) { 
+                            return (
+                                <li key={id}>
+                                    <input
+                                        className='ck'
+                                        type="checkbox"
+                                        defaultChecked={!!checkedState[index]}
+                                        onChange={() => {
+                                            setCheckedState({
+                                                ...checkedState,
+                                                [id]: !checkedState[id]
+                                            });
+
+                                            let _items = selectedHighAdventureItems?.HighAdventure ?? [];
+                                            if (!checkedState[id]){
+                                                _items.push(adminTitle)
+                                                setSelectedHighAdventureItems({
+                                                    ...selectedHighAdventureItems,
+                                                    HighAdventure: _items
+                                                })
+                                            }
+                                            else {
+                                                _items = _items.filter(item=>item !== adminTitle);
+                                                setSelectedHighAdventureItems({
+                                                    ...selectedHighAdventureItems,  _items
+                                                })
+                                            }
+                                        }}
+                                    />
+                                    <label>
+                                        <a href={link}>{newTitle}</a> <span>${newPrice}/PER</span>
+                                    </label>
+                                </li>
+                            );
+                        }
                     })}
                 </ul>
             </div>

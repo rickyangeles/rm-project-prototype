@@ -17,6 +17,7 @@ import HorseProgramsApp from './Activities/HorsePrograms';
 import TeambuildingApp from './Activities/Teambuilding';
 import PoolPartiesApp from './Activities/PoolParties';
 import LargeGroupsApp from './Activities/LargeGroups';
+import NothingSelectedApp from './Activities/NothingSelected';
 
 import FormApp from './Form/Form';
 import FooterApp from './Footer/Footer';
@@ -28,19 +29,19 @@ import {AppContext} from './AppContext';
 function App() {
     const context = useContext(AppContext)
 
-    const [groupSize, setGroupSize] = useState(0);
-    const [groupType, setGroupType] = useState("");
+    const [groupSize,                       setGroupSize] = useState(0);
+    const [groupType,                       setGroupType] = useState("");
 
-    const [constHours,  setConstHours] = useState("");
-    const [constSize,   setConstSize] = useState("");
-    const [medianSize,  setMedianSize] = useState("");
+    const [constHours,                      setConstHours] = useState("");
+    const [constSize,                       setConstSize] = useState("");
+    const [medianSize,                      setMedianSize] = useState("");
 
-    const [highAdventuretotalSum,       setHighAdventuretotalSum] = useState("");
-    const [generalRecreationtotalSum,   setGeneralRecreationtotalSum] = useState("");
-    const [wildLifetotalSum,            setWildLifetotalSum] = useState("");
-    const [teamBuildingtotalSum,        setTeamBuildingtotalSum] = useState("");
-    const [horseProgramstotalSum,       setHorseProgramstotalSum] = useState("");
-    const [poolPartytotalSum,           setPoolPartytotalSum] = useState("");
+    const [highAdventuretotalSum,           setHighAdventuretotalSum] = useState("");
+    const [generalRecreationtotalSum,       setGeneralRecreationtotalSum] = useState("");
+    const [wildLifetotalSum,                setWildLifetotalSum] = useState("");
+    const [teamBuildingtotalSum,            setTeamBuildingtotalSum] = useState("");
+    const [horseProgramstotalSum,           setHorseProgramstotalSum] = useState("");
+    const [poolPartytotalSum,               setPoolPartytotalSum] = useState("");
 
     
     const [highAdventuretotalGroupSum,      setHighAdventuretotalGroupSum] = useState(0);
@@ -50,47 +51,65 @@ function App() {
     const [horseProgramstotalGroupSum,      setHorseProgramstotalGroupSum] = useState(0);
     const [poolPartytotalGroupSum,          setPoolPartytotalGroupSum] = useState(0);
 
-    const [totalGroupPrice,                      setTotalGroupPrice] = useState(0);
+    const [totalGroupPrice,                 setTotalGroupPrice] = useState(0);
 
 
-    const highAdventureArray = [{key:0,  price: 267, label: "2 Ziplines - Flying V", link: "https://refreshingmountain.com/activities/2-ziplines-the-flying-v-run/" },
-    {key:1,  price: 537, label: "5 Ziplines + 9 Obstacles", link: "https://refreshingmountain.com/activities/5-ziplines-and-high-ropes-the-challenge-adventure-run/" },
-    {key:2, price: 199, label: "Climbing Tower (Outdoor)", link: "https://refreshingmountain.com/activities/climbing-tower-outdoor/" },
-    {key:3, price: 128, label: "Climbing Tower (Indoor)", link: "https://refreshingmountain.com/activities/indoor-climbing-wall/" },
-    {key:4, price: 267, label: "22 Elevated Obstacles", link: "https://refreshingmountain.com/activities/elevated-obstacle-course-2/" },
-    {key:5, price: 153, label: "Giant Ladder", link: "https://refreshingmountain.com/activities/giant-ladder/" },
-    {key:6, price: 153, label: "Giant Swing", link: "https://refreshingmountain.com/activities/giant-swing/" },
-    {key:7, price: 153, label: "Rappelling", link: "https://refreshingmountain.com/activities/rappelling/" }];
-
-    const [highAdventure,            setHighAdventure] = useState(highAdventureArray);
+    const [highAdventure,                   setHighAdventure] = useState([]);
+    const [wildLife,                        setWildLife] = useState([]);
+    const [generalRecreation,               setGeneralRecreation] = useState([]);
+    const [poolParties,                     setPoolParties] = useState([]);
+    const [horsePrograms,                   setHorsePrograms] = useState([]);
+    const [teamBuilding,                    setTeamBuilding] = useState([]);
+    
+    const [selectedHighAdventureItems,      setSelectedHighAdventureItems] = useState(0);
+    const [selectedGeneralRecreationItems,  setSelectedGeneralRecreationItems] = useState(0);
+    const [selectedWildLifeItems,           setSelectedWildLifeItems] = useState(0);
+    const [selectedTeamBuildingItems,       setSelectedTeamBuildingItems] = useState(0);
+    const [selectedHorseProgramsItems,      setSelectedHorseProgramsItems] = useState(0);
+    const [selectedPoolPartyItems,          setSelectedPoolPartyItems] = useState(0);
 
 
     const initialValue = {
-        groupSize,
-        setGroupSize,
-        groupType,
-        setGroupType,
-        constHours,     setConstHours,
-        constSize,      setConstSize,
-        medianSize,     setMedianSize,
+        groupSize,                      setGroupSize,
+        groupType,                      setGroupType,
+        constHours,                     setConstHours,
+        constSize,                      setConstSize,
+        medianSize,                     setMedianSize,
 
-        highAdventuretotalSum,      setHighAdventuretotalSum,
-        generalRecreationtotalSum,  setGeneralRecreationtotalSum,
-        wildLifetotalSum,           setWildLifetotalSum,
-        teamBuildingtotalSum,       setTeamBuildingtotalSum,
-        horseProgramstotalSum,      setHorseProgramstotalSum,
-        poolPartytotalSum,          setPoolPartytotalSum,
+        highAdventure,                  setHighAdventure,
+        wildLife,                       setWildLife,
+        generalRecreation,              setGeneralRecreation,
+        poolParties,                    setPoolParties,
+        horsePrograms,                  setHorsePrograms,
+        teamBuilding,                   setTeamBuilding,
+
+        highAdventuretotalSum,          setHighAdventuretotalSum,
+        generalRecreationtotalSum,      setGeneralRecreationtotalSum,
+        wildLifetotalSum,               setWildLifetotalSum,
+        teamBuildingtotalSum,           setTeamBuildingtotalSum,
+        horseProgramstotalSum,          setHorseProgramstotalSum,
+        poolPartytotalSum,              setPoolPartytotalSum,
         
-        highAdventuretotalGroupSum,      setHighAdventuretotalGroupSum,
-        generalRecreationtotalGroupSum,  setGeneralRecreationtotalGroupSum,
-        wildLifetotalGroupSum,           setWildLifetotalGroupSum,
-        teamBuildingtotalGroupSum,       setTeamBuildingtotalGroupSum,
-        horseProgramstotalGroupSum,      setHorseProgramstotalGroupSum,
-        poolPartytotalGroupSum,          setPoolPartytotalGroupSum,
+        highAdventuretotalGroupSum,     setHighAdventuretotalGroupSum,
+        generalRecreationtotalGroupSum, setGeneralRecreationtotalGroupSum,
+        wildLifetotalGroupSum,          setWildLifetotalGroupSum,
+        teamBuildingtotalGroupSum,      setTeamBuildingtotalGroupSum,
+        horseProgramstotalGroupSum,     setHorseProgramstotalGroupSum,
+        poolPartytotalGroupSum,         setPoolPartytotalGroupSum,
 
+        totalGroupPrice,                setTotalGroupPrice,
+        highAdventure,                  setHighAdventure,
+        horsePrograms,                  setHorsePrograms,
+        teamBuilding,                   setTeamBuilding,
+        generalRecreation,              setGeneralRecreation,
 
-        totalGroupPrice,                      setTotalGroupPrice,
-        highAdventure,                  setHighAdventure
+        selectedHighAdventureItems,     setSelectedHighAdventureItems,
+        selectedGeneralRecreationItems, setSelectedGeneralRecreationItems,
+        selectedWildLifeItems,          setSelectedWildLifeItems,
+        selectedTeamBuildingItems,      setSelectedTeamBuildingItems,
+        selectedHorseProgramsItems,     setSelectedHorseProgramsItems,
+        selectedPoolPartyItems,         setSelectedPoolPartyItems
+        
     }
 
     return (
@@ -113,6 +132,7 @@ function App() {
                     </div>
                     <Row>
                         <Col sm="12" lg="8">
+                            <NothingSelectedApp />
                             <HighAdventureApp />
                             <TeambuildingApp />
                             <WildlifeCenterApp />

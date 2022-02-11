@@ -9,6 +9,6 @@
 - [x] Make submit button add parameters based on the values selected. For Gravity Form use
 - [ ] Pull in section description from custom field yet to be created
 - [x] Make the activities in each section show pricing as soon as Group Type is selected, hide otherwise
-- [x] Grey out the activity sections instead of hiding it. 
+- [ ] Grey out the activity sections instead of hiding it. 
 - [x] Make the itemized total be the group prizing instead of per person
 - [ ] Make the link pull in each activity selected from each section instead of just the section subtotal

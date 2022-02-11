@@ -17,13 +17,12 @@ let sideBarClass = 'estimate-sidebar';
 let groupPrice = 0;
 let groupSizeString = "";
 
-
 function FooterApp() {
     const context = useContext(AppContext);
     const { 
         groupSize, 
-        constHours, 
         medianSize, 
+        groupType,
         highAdventuretotalSum, highAdventuretotalGroupSum,
         generalRecreationtotalSum, generalRecreationtotalGroupSum, 
         wildLifetotalSum, wildLifetotalGroupSum, 
@@ -31,11 +30,24 @@ function FooterApp() {
         horseProgramstotalSum, horseProgramstotalGroupSum,
         poolPartytotalSum, poolPartytotalGroupSum, 
         totalGroupPrice, setTotalGroupPrice,
-        highAdventure
+        selectedHighAdventureItems, setSelectedHighAdventureItems,
+        selectedHorseProgramsItems, setSelectedHorseProgramsItems,
+        selectedWildLifeItems, setSelectedWildLifeItems,
+        selectedTeamBuildingItems, setSelectedTeamBuildingItems,
+        selectedGeneralRecreationItems, setSelectedGeneralRecreationItems,
+        selectedPoolPartyItems, setSelectedPoolPartyItems
     } = context;
+    
+    const highAdvActArray = selectedHighAdventureItems['HighAdventure'];
+    const highAdvActString = highAdvActArray?.join();
+    const teamBuildingActArray = selectedTeamBuildingItems['TeamBuilding'];
+    const wildLifeActArray = selectedWildLifeItems['WildLife'];
+    const horseActArray = selectedHorseProgramsItems['HorsePrograms'];
+    const genRecActArray = selectedGeneralRecreationItems['GeneralRecreation'];
+    const poolPartyActArray = selectedPoolPartyItems['PoolParty'];
+    
 
     const [totalPrice, setTotalPrice] = useState(0);
-
 
     useEffect(()=> {
         //Array with all prices
@@ -47,11 +59,26 @@ function FooterApp() {
             horseProgramstotalSum,
             poolPartytotalSum]; 
         
+
+        console.log("HighAdventure:", highAdvActArray);
+        console.log("Team Building:", teamBuildingActArray);
+        console.log("Wildlife:", wildLifeActArray);
+        console.log("Horse:", horseActArray);
+        console.log("Gen Rec:", genRecActArray);
+        console.log("Pool:", poolPartyActArray);
+
+        if ( highAdvActArray ) {
+            const highAdvActString = highAdvActArray.map((item, index) => ( item ));
+            console.log(highAdvActString);
+        }
+        
+
+        
         //Remove any undefined values from array
         let filteredPrices = allPrices.filter(function(x) {
             return x !== undefined;
         });
-        const sum =  filteredPrices.reduce((result,number)=> result+number);
+        const sum = filteredPrices.reduce((result,number)=> result+number);
         setTotalPrice(sum);
         
         if ( medianSize < 80 ) {
@@ -60,11 +87,13 @@ function FooterApp() {
             sideBarClass = 'estimate-sidebar dim-sidebar';
         }
         const groupTotal = highAdventuretotalGroupSum + generalRecreationtotalGroupSum + wildLifetotalGroupSum + teamBuildingtotalGroupSum + horseProgramstotalGroupSum + poolPartytotalGroupSum;
-        console.log(teamBuildingtotalGroupSum + horseProgramstotalGroupSum + poolPartytotalGroupSum);
-        setTotalGroupPrice(highAdventuretotalGroupSum + generalRecreationtotalGroupSum + wildLifetotalGroupSum + teamBuildingtotalGroupSum + horseProgramstotalGroupSum + poolPartytotalGroupSum);
         
-    })
+        setTotalGroupPrice(highAdventuretotalGroupSum + generalRecreationtotalGroupSum + wildLifetotalGroupSum + teamBuildingtotalGroupSum + horseProgramstotalGroupSum + poolPartytotalGroupSum);
+    }, [groupType, medianSize, highAdventuretotalGroupSum, generalRecreationtotalGroupSum, wildLifetotalGroupSum,teamBuildingtotalGroupSum,horseProgramstotalGroupSum,poolPartytotalGroupSum])
+
+
     return (
+        
         
         <div>
             <MDBFooter className={sideBarClass} id="horseProg">
@@ -72,13 +101,13 @@ function FooterApp() {
                 <div>
                     <h4>Average Price Per Person</h4>
                     <ul>
-                        <li><Link activeClass={"active"} to="highAdv" spy={true} offset={-20} smooth={true} duration={700}>High Adventure Activities<span>${ Math.round( (highAdventuretotalSum * medianSize))}</span></Link></li>
-                        <li><Link activeClass="active" to="teamBuild" spy={true} offset={-20} smooth={true} duration={700}>Teambuilding Activities<span>${ Math.round((teamBuildingtotalSum * medianSize))}</span></Link></li>
-                        <li><Link activeClass="active" to="wildlife" spy={true} offset={-20} smooth={true} duration={700}>Wildlife Center Activities<span>${ Math.round((wildLifetotalSum * medianSize))}</span></Link></li>
-                        <li><Link activeClass="active" to="horsePro" spy={true} offset={-20}smooth={true} duration={700}>Horse Program Activities<span>${ Math.round((horseProgramstotalSum * medianSize))}</span></Link></li>
-                        <li><Link activeClass="active" to="genRec" spy={true} offset={-20} smooth={true} duration={700}>General Recreation Activities<span> ${ Math.round((generalRecreationtotalSum * medianSize)) }</span></Link> </li>
-                        <li><Link activeClass="active" to="pool" spy={true} offset={-20} smooth={true} duration={700}>Pool Parties <span>${ Math.round((poolPartytotalSum * medianSize))}</span></Link></li>
-                        <li><strong>&nbsp; <span>${ totalGroupPrice }</span></strong></li>
+                        <li><Link activeClass={"active"} to="highAdv" spy={true} offset={-20} smooth={true} duration={700}>High Adventure Activities<span>${ Math.round( highAdventuretotalGroupSum )}</span></Link></li>
+                        <li><Link activeClass="active" to="teamBuild" spy={true} offset={-20} smooth={true} duration={700}>Teambuilding Activities<span>${ Math.round( teamBuildingtotalGroupSum )}</span></Link></li>
+                        <li><Link activeClass="active" to="wildlife" spy={true} offset={-20} smooth={true} duration={700}>Wildlife Center Activities<span>${ Math.round (wildLifetotalGroupSum )}</span></Link></li>
+                        <li><Link activeClass="active" to="horsePro" spy={true} offset={-20}smooth={true} duration={700}>Horse Program Activities<span>${ Math.round( horseProgramstotalGroupSum )}</span></Link></li>
+                        <li><Link activeClass="active" to="genRec" spy={true} offset={-20} smooth={true} duration={700}>General Recreation Activities<span> ${ Math.round( generalRecreationtotalGroupSum ) }</span></Link> </li>
+                        <li><Link activeClass="active" to="pool" spy={true} offset={-20} smooth={true} duration={700}>Pool Parties <span>${ Math.round( poolPartytotalGroupSum )}</span></Link></li>
+                        <li><strong>Total <span>${ Math.round(totalGroupPrice) }</span></strong></li>
                     </ul>
                     <div className="finalPrice">
                         
@@ -90,15 +119,28 @@ function FooterApp() {
                             <a href=
                                 { 
                                     'https://refreshingmountain.com/day-activity-calculator-results/?' +
-                                    'size='         + highAdventure  +
-                                    '&type='        + groupType +
-                                    '&highAdv='     + highAdventuretotalSum +
-                                    '&teamBld='     + teamBuildingtotalSum +
-                                    '&wildLife='    + wildLifetotalSum +
-                                    '&horsePrg='    + horseProgramstotalSum +
-                                    '&genRec='      + generalRecreationtotalSum +
-                                    '&poolPrty='    + poolPartytotalSum +
-                                    '&total='       + totalPrice 
+                                    'size='             + groupSize  +
+                                    '&type='            + groupType +
+
+                                    // '&highAdv='         + highAdventuretotalSum +
+                                    // '&highAdvAct='      + highAdvActArray ?? '' + 
+
+                                    '&teamBld='         + teamBuildingtotalSum +
+                                    '&teamBldAct='      + teamBuildingActArray?.join() ?? '' + 
+
+                                    '&wildLife='        + wildLifetotalSum +
+                                    '&twildLifeAct='    + wildLifeActArray?.join() ?? '' + 
+
+                                    '&horsePrg='        + horseProgramstotalSum +
+                                    '&horsePrgAct='     + horseActArray?.join() ?? '' + 
+
+                                    '&genRec='          + generalRecreationtotalSum +
+                                    '&genRecAct='       + genRecActArray?.join() ?? '' + 
+                                    
+                                    '&poolPrty='        + poolPartytotalSum +
+                                    '&poolPrtyAct='     + poolPartyActArray?.join() ?? '' + 
+                                    
+                                    '&total='           + totalPrice 
                                 } 
                                 
                                 className="click-price-btn">Send Copy</a>
