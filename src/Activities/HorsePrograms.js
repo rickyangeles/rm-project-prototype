@@ -49,7 +49,7 @@ function HorseProgramsApp() {
                 : accumulator,
             0
           ),
-        [checkedState, medianSize, groupType, horsePrograms]
+        [checkedState, medianSize, groupType]
     );
 
     useEffect(()=> {

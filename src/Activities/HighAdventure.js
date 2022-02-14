@@ -49,7 +49,7 @@ function HighAdventureApp() {
                 : accumulator,
             0
           ),
-        [checkedState, medianSize, groupType, highAdventure]
+        [checkedState, medianSize, groupType]
     );
 
     //Updating Pricing, Single and Group
@@ -73,7 +73,7 @@ function HighAdventureApp() {
                     {highAdventure.map(({ id, title, acf, link  }, index) => {
                         let newPrice = 0;
                         let newTitle = title.rendered;
-                        
+
                         if (groupType === "day") {
                             newPrice = (Math.round(acf.price) * constHours) / medianSize;
                         }else {

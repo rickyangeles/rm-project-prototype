@@ -111,7 +111,6 @@ function App() {
         selectedPoolPartyItems,         setSelectedPoolPartyItems
         
     }
-    console.log(groupSize + groupType);
     return (
         
         <AppContext.Provider value={initialValue}>

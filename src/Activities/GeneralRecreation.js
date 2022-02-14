@@ -50,7 +50,7 @@ function GeneralRecreationApp() {
                 : accumulator,
             0
           ),
-        [checkedState, groupSize, groupType, generalRecreation]
+        [checkedState, groupSize, groupType]
     );
 
     useEffect(()=> {
