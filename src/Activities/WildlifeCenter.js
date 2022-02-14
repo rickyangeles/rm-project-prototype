@@ -55,16 +55,11 @@ function WildlifeCenterApp() {
 
     useEffect(()=> {
         setWildLifetotalSum(_wildLifetotalSum);
-
-        if ( groupType === 'overnight' ) {
-            setWildLifetotalGroupSum((_wildLifetotalSum * medianSize) * 0.75)
-        } else {
-            setWildLifetotalGroupSum((_wildLifetotalSum * medianSize))
-        }
-    }, [_wildLifetotalSum, medianSize, groupType])
+        setWildLifetotalGroupSum((_wildLifetotalSum * medianSize));
+    }, [_wildLifetotalSum, medianSize, groupType, wildLifetotalGroupSum, checkedState])
 
 
-    if ( groupType !== "" && medianSize !== 80 ) {
+    if ( groupType !== 0 && medianSize !== 80 ) {
         return (
             <>
             <div className="single-activity-section" id="wildlife">
@@ -80,20 +75,12 @@ function WildlifeCenterApp() {
                         let newPrice = 0;
                         let newTitle = title.rendered;
                         
-                        if (constHours !== "" && medianSize !== "" && isOvernight !== "") {
-                            if (isOvernight === false) {
-                                //console.log(genRec[index].label);
-                                newPrice = Math.round((acf.price * constHours) / medianSize);
-                            }
-                            else if (isOvernight === true) {
-                                //console.log(genRec[index].label);
-                                newPrice = Math.round(((acf.price * constHours) / medianSize) * 0.75);
-                            } else if (isOvernight === null) {
-                                newPrice = 0;
-                            }
+                        if (groupType === "day") {
+                            newPrice = (Math.round(acf.price) * constHours) / medianSize;
                         }else {
-                            newPrice = 0;
+                            newPrice = ((Math.round(acf.price) * constHours) / medianSize) * 0.75;
                         }
+                        newPrice = Math.round(newPrice);
 
                         let adminTitle = newTitle.replace('&#038;', '&');
                         wildLife[index].newPrice = newPrice;
@@ -129,7 +116,7 @@ function WildlifeCenterApp() {
                                         }}
                                     />
                                     <label>
-                                        <a href={link}>{newTitle.replace('&#038;', '&')}</a> <span>${newPrice}/PER</span>
+                                        <a href={link}>{newTitle.replace('&#038;', '&')}</a> <span>${Math.round(newPrice)}/PER</span>
                                         {/* <p>{desc}</p> */}
                                     </label>
                                 </li>

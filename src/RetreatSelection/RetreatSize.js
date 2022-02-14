@@ -36,8 +36,6 @@ const RetreatSizeApp = () => {
         context.setConstSize(constSize);
         context.setMedianSize(medianSize);
     }
-    
-   
         return (
             <Container>
                 <Row>

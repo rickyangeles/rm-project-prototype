@@ -271,3 +271,46 @@ input[type='checkbox'] {
     display: inline-block;
     margin-top: 1em;
 }
+
+@media only screen and (max-width: 767px) {
+    .single-activity-section ul.no-bullets li {
+        width: 100%;
+    }
+
+    .single-activity-description, ul.no-bullets {
+        padding: 1em!important;
+    }
+    .single-activity-header .activity-name {
+        padding: 1em;
+    }
+
+    .single-activity-header .activity-per-person {
+        width: 55%;
+    }
+
+    .activity-per-person > div {
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .activity-per-person > div > p {
+        text-align: center;
+        width: 100%;
+        line-height: 1.6;
+    }
+    
+    .activity-per-person > div > span {
+        width: 100%;
+    }
+    .single-activity-header .activity-name h3 {
+        font-size: 1.25em!important;
+        text-align: center;
+    }
+    .filter-bar {
+        margin: 0;
+    }
+
+    .activity-detail {
+        margin: 1em 0;
+        padding: 1em;
+    }
+}

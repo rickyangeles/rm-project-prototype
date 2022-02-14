@@ -21,7 +21,7 @@ import NothingSelectedApp from './Activities/NothingSelected';
 
 import FormApp from './Form/Form';
 import FooterApp from './Footer/Footer';
-import { isOvernight, groupType } from './RetreatSelection/RetreatType';
+import { isOvernight } from './RetreatSelection/RetreatType';
 import {AppContext} from './AppContext';
 
 
@@ -30,7 +30,7 @@ function App() {
     const context = useContext(AppContext)
 
     const [groupSize,                       setGroupSize] = useState(0);
-    const [groupType,                       setGroupType] = useState("");
+    const [groupType,                       setGroupType] = useState(0);
 
     const [constHours,                      setConstHours] = useState("");
     const [constSize,                       setConstSize] = useState("");
@@ -111,8 +111,9 @@ function App() {
         selectedPoolPartyItems,         setSelectedPoolPartyItems
         
     }
-
+    console.log(groupSize + groupType);
     return (
+        
         <AppContext.Provider value={initialValue}>
             <div className="App">
                 <Container>
@@ -132,14 +133,14 @@ function App() {
                     </div>
                     <Row>
                         <Col sm="12" lg="8">
-                            <NothingSelectedApp />
+                            {groupSize === 0 || groupType === 0 ? <NothingSelectedApp /> : null }
                             <HighAdventureApp />
                             <TeambuildingApp />
                             <WildlifeCenterApp />
                             <HorseProgramsApp />
                             <GeneralActivitiesApp />     
                             <PoolPartiesApp />
-                            <LargeGroupsApp />
+                            {groupSize === '80+ Persons' && groupType !== 0 ? <LargeGroupsApp /> : null }
                         </Col>
                         <Col className="sidebar" sm="12" lg="4">
                             <FooterApp />

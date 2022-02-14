@@ -31,7 +31,7 @@ function HighAdventureApp() {
         .then(res => {
             setHighAdventureDesc(res.data.description);
         });
-    }, [medianSize, groupType])
+    }, [medianSize,groupType])
     
     const [checkedState, setCheckedState] = useState(
         new Array(highAdventure.length).fill(false)
@@ -55,16 +55,10 @@ function HighAdventureApp() {
     //Updating Pricing, Single and Group
     useEffect(()=> {
         setHighAdventuretotalSum(_highAdventuretotalSum)
-        if ( groupType === 'overnight' ) {
-            setHighAdventuretotalGroupSum((_highAdventuretotalSum * medianSize) * 0.75)
-        } else {
-            setHighAdventuretotalGroupSum((_highAdventuretotalSum * medianSize))
-        }
-        
+        setHighAdventuretotalGroupSum((_highAdventuretotalSum * medianSize)) 
     }, [_highAdventuretotalSum, medianSize, groupType, highAdventuretotalGroupSum, checkedState])
 
-
-    if ( groupType !== "" && medianSize !== 80 ) {
+    if ( groupType !== 0 && medianSize !== 80 ) {
         return (
             <>
             <div className="single-activity-section" id="highAdv">
@@ -80,20 +74,13 @@ function HighAdventureApp() {
                         let newPrice = 0;
                         let newTitle = title.rendered;
                         
-                        if (constHours !== "" && medianSize !== "" && isOvernight !== "") {
-                            if (isOvernight === false) {
-                                //console.log(genRec[index].label);
-                                newPrice = (acf.price * constHours) / medianSize;
-                            }
-                            else if (isOvernight === true) {
-                                //console.log(genRec[index].label);
-                                newPrice = ((acf.price * constHours) / medianSize) * 0.75;
-                            } else if (isOvernight === null) {
-                                newPrice = 0;
-                            }
+                        if (groupType === "day") {
+                            newPrice = (Math.round(acf.price) * constHours) / medianSize;
                         }else {
-                            newPrice = 0;
+                            newPrice = ((Math.round(acf.price) * constHours) / medianSize) * 0.75;
                         }
+                        newPrice = Math.round(newPrice);
+
                         let adminTitle = newTitle;
                         highAdventure[index].newPrice = newPrice;
                         if ( acf.hide_in_app === false ) { 
@@ -127,7 +114,7 @@ function HighAdventureApp() {
                                         }}
                                     />
                                     <label>
-                                        <a href={link}>{newTitle}</a> <span>${newPrice}/PER</span>
+                                        <a href={link}>{newTitle}</a> <span>${Math.round(newPrice)}/PER</span>
                                     </label>
                                 </li>
                             );

@@ -31,7 +31,7 @@ function Totals() {
         <div className="finalPrice">
             
             <div>
-                <span>{totalPrice}</span> 
+                <span>{Math.round(totalPrice)}</span> 
                 <span>Per Person Estimate</span> 
             </div>
             <div>

@@ -54,16 +54,12 @@ function TeambuildingApp() {
 
     //Updating Pricing, Single and Group
     useEffect(()=> {
-        setTeamBuildingtotalSum(_teamBuildingtotalSum)
-        if ( groupType === 'overnight' ) {
-            setTeamBuildingtotalGroupSum((_teamBuildingtotalSum * medianSize) * 0.75)
-        } else {
-            setTeamBuildingtotalGroupSum((_teamBuildingtotalSum * medianSize))
-        }
-    }, [_teamBuildingtotalSum, medianSize, groupType])
+        setTeamBuildingtotalSum(Math.round(_teamBuildingtotalSum))
+        setTeamBuildingtotalGroupSum((_teamBuildingtotalSum * medianSize))
+    }, [_teamBuildingtotalSum, medianSize, groupType, teamBuildingtotalGroupSum, checkedState])
     
 
-    if ( groupType !== "" && medianSize !== 80 ) {
+    if ( groupType !== 0 && medianSize !== 80 ) {
         return (
             <>
             <div className="single-activity-section" id="teamBuild">
@@ -79,19 +75,10 @@ function TeambuildingApp() {
                         let newPrice = 0;
                         let newTitle = title.rendered;
                         
-                        if (constHours !== "" && medianSize !== "" && isOvernight !== "") {
-                            if (isOvernight === false) {
-                                //console.log(genRec[index].label);
-                                newPrice = Math.round((acf.price * constHours) / medianSize);
-                            }
-                            else if (isOvernight === true) {
-                                //console.log(genRec[index].label);
-                                newPrice = Math.round(((acf.price * constHours) / medianSize) * 0.75);
-                            } else if (isOvernight === null) {
-                                newPrice = 0;
-                            }
+                        if (groupType === "day") {
+                            newPrice = (Math.round(acf.price) * constHours) / medianSize;
                         }else {
-                            newPrice = 0;
+                            newPrice = ((Math.round(acf.price) * constHours) / medianSize) * 0.75;
                         }
 
                         let adminTitle = newTitle;
@@ -128,7 +115,7 @@ function TeambuildingApp() {
                                         }}
                                     />
                                     <label>
-                                        <a href={link}>{newTitle}</a> <span>${newPrice}/PER</span>
+                                        <a href={link}>{newTitle}</a> <span>${Math.round(newPrice)}/PER</span>
                                     </label>
                                 </li>
                             );

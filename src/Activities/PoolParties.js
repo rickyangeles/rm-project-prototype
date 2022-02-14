@@ -56,16 +56,11 @@ function PoolPartiesApp() {
 
     useEffect(()=> {
         setPoolPartytotalSum(_poolPartytotalSum)
-
-        if ( groupType === 'overnight' ) {
-            setPoolPartytotalGroupSum((_poolPartytotalSum * medianSize) * 0.75)
-        } else {
-            setPoolPartytotalGroupSum((_poolPartytotalSum * medianSize))
-        }
-    }, [_poolPartytotalSum, medianSize, groupType])
+        setPoolPartytotalGroupSum((_poolPartytotalSum * medianSize))
+    }, [_poolPartytotalSum, medianSize, groupType, poolPartytotalGroupSum, checkedState])
 
 
-    if ( groupType !== "" && medianSize !== 80 ) {
+    if ( groupType !== 0 && medianSize !== 80 ) {
         return (
             <>
             <div className="single-activity-section" id="pool">
@@ -81,20 +76,12 @@ function PoolPartiesApp() {
                         let newPrice = 0;
                         let newTitle = title.rendered;
                     
-                        if (constHours !== "" && medianSize !== "" && isOvernight !== "") {
-                            if (isOvernight === false) {
-                                //console.log(genRec[index].label);
-                                newPrice = Math.round((acf.price * constHours) / medianSize);
-                            }
-                            else if (isOvernight === true) {
-                                //console.log(genRec[index].label);
-                                newPrice = Math.round(((acf.price * constHours) / medianSize) * 0.75);
-                            } else if (isOvernight === null) {
-                                newPrice = 0;
-                            }
+                        if (groupType === "day") {
+                            newPrice = (Math.round(acf.price) * constHours) / medianSize;
                         }else {
-                            newPrice = 0;
+                            newPrice = ((Math.round(acf.price) * constHours) / medianSize) * 0.75;
                         }
+                        newPrice = Math.round(newPrice);
 
                         let adminTitle = newTitle;
                         poolParties[index].newPrice = newPrice;

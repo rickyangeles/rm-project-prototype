@@ -77,7 +77,7 @@ function FooterApp() {
         // console.log("Horse:", horseActArray);
         // console.log("Gen Rec:", genRecActArray);
         // console.log("Pool:", poolPartyActArray);
-        console.log(groupSize);
+
         //Remove any undefined values from array
         let filteredPrices = allPrices.filter(function(x) {
             return x !== undefined;
@@ -114,7 +114,49 @@ function FooterApp() {
                         <li><strong>Total <span>
                         {groupSize !== '80+ Persons'?<NumberFormat value={ Math.round( totalGroupPrice ) } displayType={'text'} thousandSeparator={true} prefix={'$'} /> : null }</span></strong></li>
                     </ul>
-                    {groupSize !== '80+ Persons'?<Totals />: null}
+                    {groupSize !== '80+ Persons'?
+                    
+                    <div className="finalPrice">
+            
+                        <div>
+                            <span>{totalPrice}</span> 
+                            <span>Per Person Estimate</span> 
+                        </div>
+                        <div>
+                            <a href=
+                                { 
+                                    'https://refreshingmountain.com/day-activity-calculator-results/?' +
+                                    'size='             + groupSize  +
+                                    '&type='            + groupType +
+
+                                    '&highAdv='         + highAdventuretotalGroupSum +
+                                    '&highAdvAct='      + highAdvActArray + 
+
+                                    '&teamBld='         + teamBuildingtotalGroupSum +
+                                    '&teamBldAct='      + teamBuildingActString + 
+
+                                    '&wildLife='        + wildLifetotalGroupSum +
+                                    '&wildLifeAct='     + wildLifeActString + 
+
+                                    '&horsePrg='        + horseProgramstotalGroupSum +
+                                    '&horsePrgAct='     + horseActString + 
+
+                                    '&genRec='          + generalRecreationtotalGroupSum +
+                                    '&genRecAct='       + genRecActString + 
+                                    
+                                    '&poolPrty='        + poolPartytotalGroupSum +
+                                    '&poolPrtyAct='     + poolPartyActString + 
+                                    
+                                    '&total='           + totalPrice + 
+                                    '&groupTotal='      + totalGroupPrice 
+                                } 
+                                
+                                className="click-price-btn" target="_blank;">Send Copy</a>
+                        </div>
+                    </div>
+                    
+                    : null}
+                    
             
                     <p className="text-center"><strong>Group Type Discounts: </strong>Day Groups may be eligible for discount with week day bookings, Monday through Friday.</p>
                     <p className="text-center">*Group events are price as a flat rate. This “pp” estimate is meant to help with planning, but final billing will be set as a flat price, with a min/max # of people that the schedule can accommodate</p>

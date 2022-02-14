@@ -8,7 +8,7 @@ import ActivityHeader from './ActivityHeader';
 
 function GeneralRecreationApp() {
     const context = useContext(AppContext);
-    const {constHours, medianSize, groupType,
+    const {constHours, medianSize, groupType, groupSize,
         generalRecreation, setGeneralRecreation,
         generalRecreationtotalSum, setGeneralRecreationtotalSum, 
         generalRecreationtotalGroupSum, setGeneralRecreationtotalGroupSum ,
@@ -50,21 +50,16 @@ function GeneralRecreationApp() {
                 : accumulator,
             0
           ),
-        [checkedState, medianSize, groupType]
+        [checkedState, groupSize, groupType, generalRecreation]
     );
 
     useEffect(()=> {
         setGeneralRecreationtotalSum(_generalRecreationtotalSum);
-
-        if ( groupType === 'overnight' ) {
-            setGeneralRecreationtotalGroupSum((_generalRecreationtotalSum * medianSize) * 0.75)
-        } else {
-            setGeneralRecreationtotalGroupSum((_generalRecreationtotalSum * medianSize))
-        }
-    }, [_generalRecreationtotalSum, medianSize, groupType])
+        setGeneralRecreationtotalGroupSum((_generalRecreationtotalSum * medianSize));
+    }, [_generalRecreationtotalSum, medianSize, groupType, checkedState, generalRecreationtotalGroupSum])
 
 
-    if ( groupType !== "" && medianSize !== 80 ) {
+    if ( groupType !== 0 && medianSize !== 80 ) {
         return (
             <>
             <div className="single-activity-section" id="genRec">
@@ -80,20 +75,12 @@ function GeneralRecreationApp() {
                         let newPrice = 0;
                         let newTitle = title.rendered;
 
-                        if (constHours !== "" && medianSize !== "" && isOvernight !== "") {
-                            if (isOvernight === false) {
-                                //console.log(genRec[index].label);
-                                newPrice = Math.round((acf.price * constHours) / medianSize);
-                            }
-                            else if (isOvernight === true) {
-                                //console.log(genRec[index].label);
-                                newPrice = Math.round(((acf.price * constHours) / medianSize) * 0.75);
-                            } else if (isOvernight === null) {
-                                newPrice = 0;
-                            }
+                        if (groupType === "day") {
+                            newPrice = (Math.round(acf.price) * constHours) / medianSize;
                         }else {
-                            newPrice = 0;
+                            newPrice = ((Math.round(acf.price) * constHours) / medianSize) * 0.75;
                         }
+                        newPrice = Math.round(newPrice);
 
                         let adminTitle = newTitle;
                         generalRecreation[index].newPrice = newPrice;
@@ -130,7 +117,7 @@ function GeneralRecreationApp() {
                                         }}
                                     />
                                     <label>
-                                        <a href={link}>{newTitle}</a> <span>${newPrice}/PER</span>
+                                        <a href={link}>{newTitle}</a> <span>${Math.round(newPrice)}/PER</span>
                                     </label>
                                 </li>
                             );

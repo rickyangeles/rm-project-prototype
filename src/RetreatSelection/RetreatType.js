@@ -2,9 +2,11 @@ import React, {useContext} from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col, Container, Form } from 'react-bootstrap';
 import { AppContext } from '../AppContext';
+
+
 var constType = "";
 export var isOvernight = false; 
-export var groupType = "";
+
 
 const RetreatTypeApp = () => {
     const context = useContext(AppContext);
@@ -21,9 +23,8 @@ const RetreatTypeApp = () => {
           default: 
             //console.log("the type isn't working");
         }
-        groupType = constType;
-       console.log(groupType);
-    }
+       context.setGroupType(constType);
+    } 
 
     return (
         <Container>
