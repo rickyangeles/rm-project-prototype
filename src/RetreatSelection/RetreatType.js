@@ -22,7 +22,7 @@ const RetreatTypeApp = () => {
             //console.log("the type isn't working");
         }
         groupType = constType;
-        // /console.log(this.state);
+       console.log(groupType);
     }
 
     return (

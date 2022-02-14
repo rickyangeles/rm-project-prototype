@@ -34,7 +34,7 @@ function PoolPartiesApp() {
             setPoolPartyDesc(res.data.description);
         });
         
-    }, [])
+    }, [medianSize, groupType])
 
     const [checkedState, setCheckedState] = useState(
         new Array(poolParties.length).fill(false)
@@ -51,7 +51,7 @@ function PoolPartiesApp() {
                 : accumulator,
             0
           ),
-        [checkedState]
+        [checkedState, medianSize, groupType]
     );
 
     useEffect(()=> {
@@ -96,7 +96,7 @@ function PoolPartiesApp() {
                             newPrice = 0;
                         }
 
-                        let adminTitle = newTitle + ' (' + newPrice + '/PER)';
+                        let adminTitle = newTitle;
                         poolParties[index].newPrice = newPrice;
                         if ( acf.hide_in_app === false ) { 
                         

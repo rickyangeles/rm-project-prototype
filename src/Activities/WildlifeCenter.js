@@ -32,12 +32,12 @@ function WildlifeCenterApp() {
         .then(res => {
             setWildLifeDesc(res.data.description);
         });
-        
-    }, [])
+    }, [medianSize, groupType])
 
     const [checkedState, setCheckedState] = useState(
         new Array(wildLife.length).fill(false)
     );
+
     const _wildLifetotalSum = useMemo(
         () =>
           Object.entries(checkedState).reduce(
@@ -50,14 +50,12 @@ function WildlifeCenterApp() {
                 : accumulator,
             0
           ),
-        [checkedState]
+        [checkedState, medianSize, groupType]
     );
 
-    
-
-
     useEffect(()=> {
-        setWildLifetotalSum(_wildLifetotalSum)
+        setWildLifetotalSum(_wildLifetotalSum);
+
         if ( groupType === 'overnight' ) {
             setWildLifetotalGroupSum((_wildLifetotalSum * medianSize) * 0.75)
         } else {
@@ -78,7 +76,7 @@ function WildlifeCenterApp() {
                     { wildLifeDesc }
                 </p>
                 <ul className="no-bullets">
-                {wildLife.map(({ id, title, acf, link  }, index) => {
+                    {wildLife.map(({ id, title, acf, link  }, index) => {
                         let newPrice = 0;
                         let newTitle = title.rendered;
                         
@@ -96,11 +94,11 @@ function WildlifeCenterApp() {
                         }else {
                             newPrice = 0;
                         }
-                        let adminTitle = newTitle + ' (' + newPrice + '/PER)';
 
+                        let adminTitle = newTitle.replace('&#038;', '&');
                         wildLife[index].newPrice = newPrice;
+
                         if ( acf.hide_in_app === false ) { 
-                        
                             return (
                                 <li key={id}>
                                     <input
@@ -113,9 +111,15 @@ function WildlifeCenterApp() {
                                                 [id]: !checkedState[id]
                                             });
 
+                                            let _items = selectedWildLifeItems?.WildLife ?? [];
                                             if (!checkedState[id]  ){
-                                                let _items = selectedWildLifeItems?.WildLife ?? [];
                                                 _items.push(adminTitle)
+                                                setSelectedWildLifeItems({
+                                                    ...selectedWildLifeItems,
+                                                    WildLife: _items
+                                                })
+                                            } else {
+                                                _items = _items.filter(item=>item != adminTitle);
                                                 setSelectedWildLifeItems({
                                                     ...selectedWildLifeItems,
                                                     WildLife: _items
@@ -125,7 +129,7 @@ function WildlifeCenterApp() {
                                         }}
                                     />
                                     <label>
-                                        <a href={link}>{newTitle}</a> <span>${newPrice}/PER</span>
+                                        <a href={link}>{newTitle.replace('&#038;', '&')}</a> <span>${newPrice}/PER</span>
                                         {/* <p>{desc}</p> */}
                                     </label>
                                 </li>

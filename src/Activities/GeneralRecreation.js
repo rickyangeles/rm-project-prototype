@@ -26,12 +26,13 @@ function GeneralRecreationApp() {
         .catch((error) => {
             console.log(error)
         }); 
+
         //Getting Category Description from Website
         axios.get('https://refreshingmountain.com/wp-json/wp/v2/activity_group_size/704')
         .then(res => {
             setGeneralRecreationDesc(res.data.description);
         });
-    }, [])
+    }, [medianSize, groupType])
     
     const [checkedState, setCheckedState] = useState(
         new Array(generalRecreation.length).fill(false)
@@ -49,11 +50,11 @@ function GeneralRecreationApp() {
                 : accumulator,
             0
           ),
-        [checkedState]
+        [checkedState, medianSize, groupType]
     );
 
     useEffect(()=> {
-        setGeneralRecreationtotalSum(_generalRecreationtotalSum)
+        setGeneralRecreationtotalSum(_generalRecreationtotalSum);
 
         if ( groupType === 'overnight' ) {
             setGeneralRecreationtotalGroupSum((_generalRecreationtotalSum * medianSize) * 0.75)
@@ -78,6 +79,7 @@ function GeneralRecreationApp() {
                     {generalRecreation.map(({ id, title, acf, link  }, index) => {
                         let newPrice = 0;
                         let newTitle = title.rendered;
+
                         if (constHours !== "" && medianSize !== "" && isOvernight !== "") {
                             if (isOvernight === false) {
                                 //console.log(genRec[index].label);
@@ -93,8 +95,9 @@ function GeneralRecreationApp() {
                             newPrice = 0;
                         }
 
-                        let adminTitle = newTitle + ' (' + newPrice + '/PER)';
+                        let adminTitle = newTitle;
                         generalRecreation[index].newPrice = newPrice;
+
                         if ( acf.hide_in_app === false ) { 
                             return (
                                 <li key={id}>
@@ -108,14 +111,21 @@ function GeneralRecreationApp() {
                                                 [id]: !checkedState[id]
                                             });
 
-                                            if (!checkedState[id]  ){
-                                                let _items = selectedGeneralRecreationItems?.HighAdventure ?? [];
+                                            let _items = selectedGeneralRecreationItems?.GeneralRecreation ?? [];
+                                            if (!checkedState[id]  ){    
                                                 _items.push(adminTitle)
                                                 setSelectedGeneralRecreationItems({
                                                     ...selectedGeneralRecreationItems,
                                                     GeneralRecreation: _items
                                                 })
+                                            } else {
+                                                _items = _items.filter(item=>item != adminTitle);
+                                                setSelectedGeneralRecreationItems({
+                                                    ...selectedGeneralRecreationItems,
+                                                    GeneralRecreation: _items
+                                                })
                                             }
+                                            
                                             
                                         }}
                                     />

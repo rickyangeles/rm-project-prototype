@@ -15,7 +15,7 @@ function HorseProgramsApp() {
         selectedHorseProgramsItems, setSelectedHorseProgramsItems,
     } = context;
     const [horseProgDesc, setHorseProgDesc] = useState("");
-
+ 
 
     useEffect(() => {
         //Call to get the activties for this category
@@ -31,7 +31,7 @@ function HorseProgramsApp() {
         .then(res => {
             setHorseProgDesc(res.data.description);
         });
-    }, [])
+    }, [medianSize, groupType])
 
     const [checkedState, setCheckedState] = useState(
         new Array(horsePrograms.length).fill(false)
@@ -49,7 +49,7 @@ function HorseProgramsApp() {
                 : accumulator,
             0
           ),
-        [checkedState]
+        [checkedState, medianSize, groupType]
     );
 
     useEffect(()=> {
@@ -92,7 +92,7 @@ function HorseProgramsApp() {
                         }else {
                             newPrice = 0;
                         }
-                        let adminTitle = newTitle + ' (' + newPrice + '/PER)';
+                        let adminTitle = newTitle;
                         horsePrograms[index].newPrice = newPrice;
                         if ( acf.hide_in_app === false ) { 
                             return (

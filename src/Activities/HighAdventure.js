@@ -31,7 +31,7 @@ function HighAdventureApp() {
         .then(res => {
             setHighAdventureDesc(res.data.description);
         });
-    }, [])
+    }, [medianSize, groupType])
     
     const [checkedState, setCheckedState] = useState(
         new Array(highAdventure.length).fill(false)
@@ -49,7 +49,7 @@ function HighAdventureApp() {
                 : accumulator,
             0
           ),
-        [checkedState]
+        [checkedState, medianSize, groupType, highAdventure]
     );
 
     //Updating Pricing, Single and Group
@@ -60,7 +60,8 @@ function HighAdventureApp() {
         } else {
             setHighAdventuretotalGroupSum((_highAdventuretotalSum * medianSize))
         }
-    }, [_highAdventuretotalSum, medianSize, groupType])
+        
+    }, [_highAdventuretotalSum, medianSize, groupType, highAdventuretotalGroupSum, checkedState])
 
 
     if ( groupType !== "" && medianSize !== 80 ) {
@@ -72,7 +73,7 @@ function HighAdventureApp() {
                     total={'$' +  highAdventuretotalSum } 
                 />
                 <p className="single-activity-description">
-                    {  highAdventureDesc }
+                    {  highAdventureDesc  }
                 </p>
                 <ul className="no-bullets">
                     {highAdventure.map(({ id, title, acf, link  }, index) => {
@@ -82,18 +83,18 @@ function HighAdventureApp() {
                         if (constHours !== "" && medianSize !== "" && isOvernight !== "") {
                             if (isOvernight === false) {
                                 //console.log(genRec[index].label);
-                                newPrice = Math.round((acf.price * constHours) / medianSize);
+                                newPrice = (acf.price * constHours) / medianSize;
                             }
                             else if (isOvernight === true) {
                                 //console.log(genRec[index].label);
-                                newPrice = Math.round(((acf.price * constHours) / medianSize) * 0.75);
+                                newPrice = ((acf.price * constHours) / medianSize) * 0.75;
                             } else if (isOvernight === null) {
                                 newPrice = 0;
                             }
                         }else {
                             newPrice = 0;
                         }
-                        let adminTitle = newTitle + ' (' + newPrice + '/PER)';
+                        let adminTitle = newTitle;
                         highAdventure[index].newPrice = newPrice;
                         if ( acf.hide_in_app === false ) { 
                             return (
@@ -117,9 +118,10 @@ function HighAdventureApp() {
                                                 })
                                             }
                                             else {
-                                                _items = _items.filter(item=>item !== adminTitle);
+                                                _items = _items.filter(item=>item != adminTitle);
                                                 setSelectedHighAdventureItems({
-                                                    ...selectedHighAdventureItems,  _items
+                                                    ...selectedHighAdventureItems,
+                                                    HighAdventure: _items
                                                 })
                                             }
                                         }}

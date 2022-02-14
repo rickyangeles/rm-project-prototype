@@ -31,7 +31,7 @@ function TeambuildingApp() {
         .then(res => {
             setTeamBuildingDesc(res.data.description);
         });
-    }, [])
+    }, [medianSize, groupType])
 
     const [checkedState, setCheckedState] = useState(
         new Array(teamBuilding.length).fill(false)
@@ -49,7 +49,7 @@ function TeambuildingApp() {
                 : accumulator,
             0
           ),
-        [checkedState]
+        [checkedState, medianSize, groupType]
     );
 
     //Updating Pricing, Single and Group
@@ -94,7 +94,7 @@ function TeambuildingApp() {
                             newPrice = 0;
                         }
 
-                        let adminTitle = newTitle + ' (' + newPrice + '/PER)';
+                        let adminTitle = newTitle;
                         
                         teamBuilding[index].newPrice = newPrice;
                         if ( acf.hide_in_app === false ) { 
