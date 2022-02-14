@@ -19,7 +19,7 @@ function GeneralRecreationApp() {
 
     useEffect(() => {
         //Call to get the activties for this category
-        axios.get('https://refreshingmountain.com/wp-json/wp/v2/activities?per_page=100&activity_group_size=704&_fields[]=id&_fields[]=title&_fields[]=acf.price&_fields[]=acf.hide_in_app&_fields[]=link')
+        axios.get('https://refreshingmountain.com/wp-json/wp/v2/activities?per_page=10&activity_group_size=704&_fields[]=id&_fields[]=title&_fields[]=acf.price&_fields[]=acf.hide_in_app&_fields[]=link')
         .then(res => {
             setGeneralRecreation(res.data);
         })
