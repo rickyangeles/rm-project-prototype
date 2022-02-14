@@ -77,8 +77,10 @@ function GeneralRecreationApp() {
 
                         if (groupType === "day") {
                             newPrice = (Math.round(acf.price) * constHours) / medianSize;
-                        }else {
+                        }else if ( groupType === "overnight") {
                             newPrice = ((Math.round(acf.price) * constHours) / medianSize) * 0.75;
+                        } else {
+                            newPrice = 0;
                         }
                         newPrice = Math.round(newPrice);
 
