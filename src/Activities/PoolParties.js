@@ -34,7 +34,7 @@ function PoolPartiesApp() {
             setPoolPartyDesc(res.data.description);
         });
         
-    }, [medianSize, groupType])
+    }, [])
 
     const [checkedState, setCheckedState] = useState(
         new Array(poolParties.length).fill(false)

@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState, useContext } from 'react';
 import './Activities.css';
 import { AppContext } from '../AppContext';
-import { isOvernight } from '../RetreatSelection/RetreatType';
 import ActivityHeader from './ActivityHeader';
 import axios from 'axios';
 
@@ -31,7 +30,7 @@ function HighAdventureApp() {
         .then(res => {
             setHighAdventureDesc(res.data.description);
         });
-    }, [medianSize,groupType])
+    }, [])
     
     const [checkedState, setCheckedState] = useState(
         new Array(highAdventure.length).fill(false)
@@ -76,7 +75,7 @@ function HighAdventureApp() {
 
                         if (groupType === "day") {
                             newPrice = (Math.round(acf.price) * constHours) / medianSize;
-                        }else if ( groupType === "overnight") {
+                        } else if ( groupType === "overnight") {
                             newPrice = ((Math.round(acf.price) * constHours) / medianSize) * 0.75;
                         } else {
                             newPrice = 0;
@@ -107,7 +106,7 @@ function HighAdventureApp() {
                                                 })
                                             }
                                             else {
-                                                _items = _items.filter(item=>item != adminTitle);
+                                                _items = _items.filter(item=>item !== adminTitle);
                                                 setSelectedHighAdventureItems({
                                                     ...selectedHighAdventureItems,
                                                     HighAdventure: _items

@@ -31,7 +31,7 @@ function HorseProgramsApp() {
         .then(res => {
             setHorseProgDesc(res.data.description);
         });
-    }, [medianSize, groupType])
+    }, [])
 
     const [checkedState, setCheckedState] = useState(
         new Array(horsePrograms.length).fill(false)

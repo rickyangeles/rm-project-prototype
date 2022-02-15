@@ -32,7 +32,7 @@ function WildlifeCenterApp() {
         .then(res => {
             setWildLifeDesc(res.data.description);
         });
-    }, [medianSize, groupType])
+    }, [])
 
     const [checkedState, setCheckedState] = useState(
         new Array(wildLife.length).fill(false)

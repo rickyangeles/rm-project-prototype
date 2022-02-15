@@ -2,7 +2,6 @@ import React, { useEffect, useMemo, useState, useContext } from 'react';
 import axios from 'axios';
 import './Activities.css';
 import { AppContext } from '../AppContext';
-import { isOvernight } from '../RetreatSelection/RetreatType';
 import ActivityHeader from './ActivityHeader';
 
 
@@ -32,7 +31,7 @@ function GeneralRecreationApp() {
         .then(res => {
             setGeneralRecreationDesc(res.data.description);
         });
-    }, [medianSize, groupType])
+    }, [])
     
     const [checkedState, setCheckedState] = useState(
         new Array(generalRecreation.length).fill(false)
@@ -108,7 +107,7 @@ function GeneralRecreationApp() {
                                                     GeneralRecreation: _items
                                                 })
                                             } else {
-                                                _items = _items.filter(item=>item != adminTitle);
+                                                _items = _items.filter(item=>item !== adminTitle);
                                                 setSelectedGeneralRecreationItems({
                                                     ...selectedGeneralRecreationItems,
                                                     GeneralRecreation: _items

@@ -31,7 +31,7 @@ function TeambuildingApp() {
         .then(res => {
             setTeamBuildingDesc(res.data.description);
         });
-    }, [medianSize, groupType])
+    }, [])
 
     const [checkedState, setCheckedState] = useState(
         new Array(teamBuilding.length).fill(false)
