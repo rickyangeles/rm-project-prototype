@@ -30,15 +30,16 @@ function HighAdventureApp() {
         .then(res => {
             setHighAdventureDesc(res.data.description);
         });
+
     }, [])
     
     const [checkedState, setCheckedState] = useState(
         new Array(highAdventure.length).fill(false)
     );
     
-    const _highAdventuretotalSum = useMemo(
-        () =>
-          Object.entries(checkedState).reduce(
+    //Updating Pricing, Single and Group
+    useEffect(()=> {
+        const _highAdventuretotalSum =  Object.entries(checkedState).reduce(
             (accumulator, [key, value]) =>
               value 
                 ? accumulator +
@@ -47,15 +48,12 @@ function HighAdventureApp() {
                   )?.newPrice
                 : accumulator,
             0
-          ),
-        [checkedState, medianSize, groupType]
-    );
-
-    //Updating Pricing, Single and Group
-    useEffect(()=> {
+        )
         setHighAdventuretotalSum(_highAdventuretotalSum)
         setHighAdventuretotalGroupSum((_highAdventuretotalSum * medianSize)) 
-    }, [_highAdventuretotalSum, medianSize, groupType])
+
+        console.log(selectedHighAdventureItems);
+    }, [checkedState, medianSize, groupType])
 
     if ( groupType !== 0 && medianSize !== 80 ) {
         return (

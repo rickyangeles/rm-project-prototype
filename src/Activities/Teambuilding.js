@@ -37,9 +37,9 @@ function TeambuildingApp() {
         new Array(teamBuilding.length).fill(false)
     );
 
-    const _teamBuildingtotalSum = useMemo(
-        () =>
-          Object.entries(checkedState).reduce(
+    //Updating Pricing, Single and Group
+    useEffect(()=> {
+        const _teamBuildingtotalSum =  Object.entries(checkedState).reduce(
             (accumulator, [key, value]) =>
               value 
                 ? accumulator +
@@ -48,16 +48,11 @@ function TeambuildingApp() {
                   )?.newPrice
                 : accumulator,
             0
-          ),
-        [checkedState, medianSize, groupType]
-    );
+        )
+        setTeamBuildingtotalSum(_teamBuildingtotalSum)
+        setTeamBuildingtotalGroupSum((_teamBuildingtotalSum * medianSize)) 
+    }, [checkedState, medianSize, groupType])
 
-    //Updating Pricing, Single and Group
-    useEffect(()=> {
-        setTeamBuildingtotalSum(Math.round(_teamBuildingtotalSum))
-        setTeamBuildingtotalGroupSum((_teamBuildingtotalSum * medianSize))
-    }, [_teamBuildingtotalSum, medianSize, groupType])
-    
 
     if ( groupType !== 0 && medianSize !== 80 ) {
         return (
@@ -82,6 +77,7 @@ function TeambuildingApp() {
                         } else {
                             newPrice = 0;
                         }
+                        newPrice = Math.round(newPrice);
 
                         let adminTitle = newTitle;
                         

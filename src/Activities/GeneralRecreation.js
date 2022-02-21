@@ -37,9 +37,9 @@ function GeneralRecreationApp() {
         new Array(generalRecreation.length).fill(false)
     );
     
-    const _generalRecreationtotalSum = useMemo(
-        () =>
-          Object.entries(checkedState).reduce(
+    //Updating Pricing, Single and Group
+    useEffect(()=> {
+        const _generalRecreationtotalSum =  Object.entries(checkedState).reduce(
             (accumulator, [key, value]) =>
               value 
                 ? accumulator +
@@ -48,15 +48,10 @@ function GeneralRecreationApp() {
                   )?.newPrice
                 : accumulator,
             0
-          ),
-        [checkedState, groupSize, groupType]
-    );
-
-    useEffect(()=> {
-        setGeneralRecreationtotalSum(_generalRecreationtotalSum);
-        setGeneralRecreationtotalGroupSum((_generalRecreationtotalSum * medianSize));
-    }, [_generalRecreationtotalSum, medianSize, groupType, checkedState, generalRecreationtotalGroupSum])
-
+        )
+        setGeneralRecreationtotalSum(_generalRecreationtotalSum)
+        setGeneralRecreationtotalGroupSum((_generalRecreationtotalSum * medianSize)) 
+    }, [checkedState, medianSize, groupType])
 
     if ( groupType !== 0 && medianSize !== 80 ) {
         return (

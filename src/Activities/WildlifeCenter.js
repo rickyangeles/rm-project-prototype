@@ -38,26 +38,21 @@ function WildlifeCenterApp() {
         new Array(wildLife.length).fill(false)
     );
 
-    const _wildLifetotalSum = useMemo(
-        () =>
-          Object.entries(checkedState).reduce(
+    //Updating Pricing, Single and Group
+    useEffect(()=> {
+        const _wildLifetotalSum =  Object.entries(checkedState).reduce(
             (accumulator, [key, value]) =>
-              value  
+              value 
                 ? accumulator +
                 wildLife.find(
                     (subscriber) => subscriber.id + "" === key
                   )?.newPrice
                 : accumulator,
             0
-          ),
-        [checkedState, medianSize, groupType]
-    );
-
-    useEffect(()=> {
-        setWildLifetotalSum(_wildLifetotalSum);
-        setWildLifetotalGroupSum((_wildLifetotalSum * medianSize));
-    }, [_wildLifetotalSum, medianSize, groupType, wildLifetotalGroupSum, checkedState])
-
+        )
+        setWildLifetotalSum(_wildLifetotalSum)
+        setWildLifetotalGroupSum((_wildLifetotalSum * medianSize)) 
+    }, [checkedState, medianSize, groupType])
 
     if ( groupType !== 0 && medianSize !== 80 ) {
         return (

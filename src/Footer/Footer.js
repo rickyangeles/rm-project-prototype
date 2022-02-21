@@ -41,22 +41,29 @@ function FooterApp() {
     } = context;
     
     const highAdvActArray = selectedHighAdventureItems['HighAdventure'];
-    const highAdvActString = highAdvActArray ? highAdvActArray.join(', ') : 'Nothing Selected';
+    let highAdvActString = highAdvActArray ? highAdvActArray.join(', ') : 'N/A';
+    if (highAdvActArray?.length === 0) { highAdvActArray.push('N/A'); }
 
     const teamBuildingActArray = selectedTeamBuildingItems['TeamBuilding'];
-    const teamBuildingActString = teamBuildingActArray?.join(', ');
+    let teamBuildingActString = teamBuildingActArray ? teamBuildingActArray.join(', ') : 'N/A';
+    if (teamBuildingActArray?.length === 0) { teamBuildingActArray.push('N/A'); }
+
 
     const wildLifeActArray = selectedWildLifeItems['WildLife'];
-    const wildLifeActString = wildLifeActArray?.join(', ');
+    let wildLifeActString = wildLifeActArray ? wildLifeActArray.join(', ') : 'N/A';
+    if (wildLifeActArray?.length === 0) { wildLifeActArray.push('N/A'); }
 
     const horseActArray = selectedHorseProgramsItems['HorsePrograms'];
-    const horseActString = horseActArray?.join(', ');
+    let horseActString = horseActArray ? horseActArray.join(', ') : 'N/A';
+    if (horseActArray?.length === 0) { horseActArray.push('N/A'); }
 
     const genRecActArray = selectedGeneralRecreationItems['GeneralRecreation'];
-    const genRecActString = genRecActArray?.join(', ');
+    let genRecActString = genRecActArray ? genRecActArray.join(', ') : 'N/A';
+    if (genRecActArray?.length === 0) { genRecActArray.push('N/A'); }
 
     const poolPartyActArray = selectedPoolPartyItems['PoolParty'];
-    const poolPartyActString = poolPartyActArray?.join(', ');
+    let poolPartyActString = poolPartyActArray ? poolPartyActArray.join(', ') : 'N/A';
+    if (poolPartyActArray?.length === 0) { poolPartyActArray.push('N/A'); }
     
      const [totalPrice, setTotalPrice] = useState(0);
 
@@ -71,12 +78,13 @@ function FooterApp() {
             horseProgramstotalSum,
             poolPartytotalSum]; 
 
-        // console.log("HighAdventure:", highAdvActArray);
-        // console.log("Team Building:", teamBuildingActArray);
-        // console.log("Wildlife:", wildLifeActArray);
-        // console.log("Horse:", horseActArray);
-        // console.log("Gen Rec:", genRecActArray);
-        // console.log("Pool:", poolPartyActArray);
+        console.log("HighAdventure:", highAdvActString);
+        console.log("Team Building:", selectedTeamBuildingItems['TeamBuilding']);
+        console.log("Wildlife:", wildLifeActString);
+        console.log("Horse:", horseActString);
+        console.log("Gen Rec:", genRecActString);
+        console.log("Pool:", poolPartyActString);
+
 
         //Remove any undefined values from array
         let filteredPrices = allPrices.filter(function(x) {
@@ -130,7 +138,7 @@ function FooterApp() {
                                     '&type='            + groupType +
 
                                     '&highAdv='         + highAdventuretotalGroupSum +
-                                    '&highAdvAct='      + highAdvActArray + 
+                                    '&highAdvAct='      + highAdvActString + 
 
                                     '&teamBld='         + teamBuildingtotalGroupSum +
                                     '&teamBldAct='      + teamBuildingActString + 

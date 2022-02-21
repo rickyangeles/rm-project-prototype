@@ -12,3 +12,5 @@
 - [x] Grey out the activity sections instead of hiding it. 
 - [x] Make the itemized total be the group prizing instead of per person
 - [x] Make the link pull in each activity selected from each section instead of just the section subtotal
+- [x] Make fields on the site readyonly
+- [x] default to "N/A" if no actvities are selected

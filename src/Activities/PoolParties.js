@@ -39,9 +39,11 @@ function PoolPartiesApp() {
     const [checkedState, setCheckedState] = useState(
         new Array(poolParties.length).fill(false)
     );
-    const _poolPartytotalSum = useMemo(
-        () =>
-          Object.entries(checkedState).reduce(
+    
+    
+    //Updating Pricing, Single and Group
+    useEffect(()=> {
+        const _poolPartytotalSum =  Object.entries(checkedState).reduce(
             (accumulator, [key, value]) =>
               value 
                 ? accumulator +
@@ -50,14 +52,10 @@ function PoolPartiesApp() {
                   )?.newPrice
                 : accumulator,
             0
-          ),
-        [checkedState, medianSize, groupType]
-    );
-
-    useEffect(()=> {
+        )
         setPoolPartytotalSum(_poolPartytotalSum)
-        setPoolPartytotalGroupSum((_poolPartytotalSum * medianSize))
-    }, [_poolPartytotalSum, medianSize, groupType, poolPartytotalGroupSum, checkedState])
+        setPoolPartytotalGroupSum((_poolPartytotalSum * medianSize)) 
+    }, [checkedState, medianSize, groupType])
 
 
     if ( groupType !== 0 && medianSize !== 80 ) {

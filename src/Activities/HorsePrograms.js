@@ -37,9 +37,9 @@ function HorseProgramsApp() {
         new Array(horsePrograms.length).fill(false)
     );
     
-    const _horseProgramstotalSum = useMemo(
-        () =>
-          Object.entries(checkedState).reduce(
+    //Updating Pricing, Single and Group
+    useEffect(()=> {
+        const _horseProgramstotalSum =  Object.entries(checkedState).reduce(
             (accumulator, [key, value]) =>
               value 
                 ? accumulator +
@@ -48,16 +48,12 @@ function HorseProgramsApp() {
                   )?.newPrice
                 : accumulator,
             0
-          ),
-        [checkedState, medianSize, groupType]
-    );
+        )
+        setHorseProgramstotalSum(_horseProgramstotalSum)
+        setHorseProgramstotalGroupSum((_horseProgramstotalSum * medianSize)) 
+    }, [checkedState, medianSize, groupType])
 
-    useEffect(()=> {
-        setHorseProgramstotalSum(_horseProgramstotalSum);
-        setHorseProgramstotalGroupSum((_horseProgramstotalSum * medianSize))
-    }, [_horseProgramstotalSum, medianSize, groupType, checkedState, horseProgramstotalGroupSum, checkedState])
-
-
+    
     if ( groupType !== 0 && medianSize !== 80 ) {
         return (
             <>
