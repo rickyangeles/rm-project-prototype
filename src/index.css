@@ -314,3 +314,8 @@ input[type='checkbox'] {
         padding: 1em;
     }
 }
+
+.estimate-sidebar .text-center:not(:first-of-type) {
+    font-size: 14px;
+    font-style: italic;
+}

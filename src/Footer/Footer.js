@@ -101,10 +101,9 @@ function FooterApp() {
 
         
         <div>
-            <MDBFooter className={sideBarClass} id="horseProg">
+            <MDBFooter className={sideBarClass}>
                 <h3>Your Group Price Estimate</h3>
                 <div>
-                    <h4>Average Price Per Person</h4>
                     <ul>
                         <li><Link activeClass={"active"} to="highAdv" spy={true} offset={-20} smooth={true} duration={700}>High Adventure Activities<span>
                             {groupSize !== '80+ Persons'?<NumberFormat value={ Math.round( highAdventuretotalGroupSum )} displayType={'text'} thousandSeparator={true} prefix={'$'} /> : null }</span></Link></li>
@@ -168,6 +167,7 @@ function FooterApp() {
             
                     <p className="text-center"><strong>Group Type Discounts: </strong>Day Groups may be eligible for discount with week day bookings, Monday through Friday.</p>
                     <p className="text-center">*Group events are price as a flat rate. This “pp” estimate is meant to help with planning, but final billing will be set as a flat price, with a min/max # of people that the schedule can accommodate</p>
+                    <p className="text-center">** The rates shown in this tool for “Overnight Group” apply to any event booked at Refreshing Mountain with at least 30 people, 2 nights of lodging, and 4 meals booked as a retreat package.  They represent a 25% discount on activities, which can be applied to any activities schedule that is part of the event and created at least 60+ days before the start date of the event.  Contact Guest Services for additional information on these discounts and scheduling.</p>
                 </div>
             </MDBFooter>
         </div>

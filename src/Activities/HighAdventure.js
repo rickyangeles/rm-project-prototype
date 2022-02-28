@@ -13,7 +13,7 @@ function HighAdventureApp() {
         highAdventuretotalGroupSum, setHighAdventuretotalGroupSum,
         selectedHighAdventureItems, setSelectedHighAdventureItems, 
     } = context;    
-    const [highAdventureDesc, setHighAdventureDesc] = useState(0);
+    const [highAdventureDesc, setHighAdventureDesc] = useState('Loading Description');
 
 
     useEffect(() => {
