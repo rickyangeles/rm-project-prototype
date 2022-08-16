@@ -9,7 +9,7 @@ import ActivityHeader from './ActivityHeader';
 function PoolPartiesApp() {
     const context = useContext(AppContext);
     const {
-        constHours, medianSize, groupType, 
+        constHours, medianSize, groupType, groupEventType,
         poolParties, setPoolParties,
         poolPartytotalSum, setPoolPartytotalSum, 
         poolPartytotalGroupSum, setPoolPartytotalGroupSum,
@@ -58,7 +58,7 @@ function PoolPartiesApp() {
     }, [checkedState, medianSize, groupType])
 
 
-    if ( groupType !== 0 && medianSize !== 80 ) {
+    if ( groupType !== 0 && medianSize !== 80 && groupEventType !== 'Team Building' ) {
         return (
             <>
             <div className="single-activity-section" id="pool">

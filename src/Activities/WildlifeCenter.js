@@ -8,7 +8,7 @@ import ActivityHeader from './ActivityHeader';
 
 function WildlifeCenterApp() {
     const context = useContext(AppContext);
-    const {constHours, medianSize, groupType, 
+    const {constHours, medianSize, groupType, groupEventType,
         wildLife, setWildLife,
         wildLifetotalSum, setWildLifetotalSum, 
         wildLifetotalGroupSum, setWildLifetotalGroupSum,
@@ -54,7 +54,7 @@ function WildlifeCenterApp() {
         setWildLifetotalGroupSum((_wildLifetotalSum * medianSize)) 
     }, [checkedState, medianSize, groupType])
 
-    if ( groupType !== 0 && medianSize !== 80 ) {
+    if ( groupType !== 0 && medianSize !== 80 && groupEventType !== 'Team Building' ) {
         return (
             <>
             <div className="single-activity-section" id="wildlife">

@@ -54,7 +54,7 @@ function TeambuildingApp() {
     }, [checkedState, medianSize, groupType])
 
 
-    if ( groupType !== 0 && medianSize !== 80 ) {
+    if ( groupType !== 0 && medianSize !== 80 || groupType == 'Team Building' ) {
         return (
             <>
             <div className="single-activity-section" id="teamBuild">

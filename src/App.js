@@ -10,6 +10,7 @@ import axios from 'axios';
 import HeadingApp from './RetreatSelection/Heading';
 import RetreatSizeApp from './RetreatSelection/RetreatSize';
 import RetreatTypeApp from './RetreatSelection/RetreatType';
+import RetreatEventTypeApp from './RetreatSelection/RetreatEventType';
 import GeneralActivitiesApp from './Activities/GeneralRecreation';
 import WildlifeCenterApp from './Activities/WildlifeCenter';
 import HighAdventureApp from './Activities/HighAdventure';
@@ -31,6 +32,7 @@ function App() {
 
     const [groupSize,                       setGroupSize] = useState(0);
     const [groupType,                       setGroupType] = useState(0);
+    const [groupEventType,                  setGroupEventType] = useState(0);
 
     const [constHours,                      setConstHours] = useState("");
     const [constSize,                       setConstSize] = useState("");
@@ -72,6 +74,7 @@ function App() {
     const initialValue = {
         groupSize,                      setGroupSize,
         groupType,                      setGroupType,
+        groupEventType,                 setGroupEventType,
         constHours,                     setConstHours,
         constSize,                      setConstSize,
         medianSize,                     setMedianSize,
@@ -117,13 +120,16 @@ function App() {
             <div className="App">
                 <Container>
                     <Row className="filter-bar">
-                        <Col className="heading-intro" sm="12" lg="4">
+                        <Col className="heading-intro" sm="12" lg="3">
                             <HeadingApp />
                         </Col>
-                        <Col className="retreat-size" sm="12" lg="4">
+                        <Col className="retreat-size" sm="12" lg="3">
                             <RetreatSizeApp />
                         </Col>
-                        <Col className="retreat-type" sm="12" lg="4">
+                        <Col className="event-type" sm="12" lg="3">
+                            <RetreatEventTypeApp />
+                        </Col>
+                        <Col className="retreat-type" sm="12" lg="3">
                             <RetreatTypeApp />
                         </Col>
                     </Row>
@@ -132,7 +138,7 @@ function App() {
                     </div>
                     <Row>
                         <Col sm="12" lg="8">
-                            {groupSize === 0 || groupType === 0 ? <NothingSelectedApp /> : null }
+                            {groupSize === 0 || groupType === 0 || groupEventType == 0 ? <NothingSelectedApp /> : null }
                             <HighAdventureApp />
                             <TeambuildingApp />
                             <WildlifeCenterApp />

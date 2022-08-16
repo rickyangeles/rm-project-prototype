@@ -8,7 +8,7 @@ import ActivityHeader from './ActivityHeader';
 
 function HorseProgramsApp() {
     const context = useContext(AppContext);
-    const {constHours, medianSize, groupType, 
+    const {constHours, medianSize, groupType, groupEventType, 
         horsePrograms, setHorsePrograms, 
         horseProgramstotalSum, setHorseProgramstotalSum, 
         horseProgramstotalGroupSum, setHorseProgramstotalGroupSum,
@@ -54,7 +54,7 @@ function HorseProgramsApp() {
     }, [checkedState, medianSize, groupType])
 
     
-    if ( groupType !== 0 && medianSize !== 80 ) {
+    if ( groupType !== 0 && medianSize !== 80 && groupEventType !== 'Team Building') {
         return (
             <>
             <div className="single-activity-section" id="horsePro">

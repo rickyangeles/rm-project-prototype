@@ -25,6 +25,7 @@ function FooterApp() {
         groupSize, 
         medianSize, 
         groupType,
+        groupEventType,
         highAdventuretotalSum, highAdventuretotalGroupSum,
         generalRecreationtotalSum, generalRecreationtotalGroupSum, 
         wildLifetotalSum, wildLifetotalGroupSum, 
@@ -135,6 +136,7 @@ function FooterApp() {
                                     'https://refreshingmountain.com/day-activity-calculator-results/?' +
                                     'size='             + groupSize  +
                                     '&type='            + groupType +
+                                    '&event='           + groupEventType +
 
                                     '&highAdv='         + highAdventuretotalGroupSum +
                                     '&highAdvAct='      + highAdvActString + 
@@ -158,7 +160,7 @@ function FooterApp() {
                                     '&groupTotal='      + totalGroupPrice 
                                 } 
                                 
-                                className="click-price-btn" target="_blank;">Send Copy</a>
+                                className="click-price-btn" target="_blank;">Submit Inquiry</a>
                         </div>
                     </div>
                     

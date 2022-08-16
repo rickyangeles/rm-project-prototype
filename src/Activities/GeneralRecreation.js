@@ -7,7 +7,7 @@ import ActivityHeader from './ActivityHeader';
 
 function GeneralRecreationApp() {
     const context = useContext(AppContext);
-    const {constHours, medianSize, groupType, groupSize,
+    const {constHours, medianSize, groupType, groupEventType, groupSize,
         generalRecreation, setGeneralRecreation,
         generalRecreationtotalSum, setGeneralRecreationtotalSum, 
         generalRecreationtotalGroupSum, setGeneralRecreationtotalGroupSum ,
@@ -53,7 +53,7 @@ function GeneralRecreationApp() {
         setGeneralRecreationtotalGroupSum((_generalRecreationtotalSum * medianSize)) 
     }, [checkedState, medianSize, groupType])
 
-    if ( groupType !== 0 && medianSize !== 80 ) {
+    if ( groupType !== 0 && medianSize !== 80 && groupEventType !== 'Team Building'  ) {
         return (
             <>
             <div className="single-activity-section" id="genRec">
