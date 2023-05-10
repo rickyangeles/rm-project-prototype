@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react'; 
+import React, {useContext} from 'react'; 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Row, Col, Container, Form } from 'react-bootstrap';
 import { AppContext } from '../AppContext';
@@ -45,7 +45,7 @@ const RetreatSizeApp = () => {
                                 <Form.Group as={Col} controlId="retreat-size">
                                     <Form.Label>Enter Group Size</Form.Label>
                                     <Form.Control as="select" onChange={onSizeChange}>
-                                        <option id="size">Group Size:</option>
+                                        <option id="size">Select Group Size</option>
                                         <option id="20-39">20-39 Persons</option>
                                         <option id="40-59">40-59 Persons</option>
                                         <option id="60-9">60-79 Persons</option>

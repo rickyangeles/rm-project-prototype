@@ -3,21 +3,17 @@ import NumberFormat from 'react-number-format';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { MDBFooter } from "mdbreact";
 import { Link } from 'react-scroll';
-import Totals from './Totals';
 import './Footer.css';
 
-import { teambuildingTotalPrice } from '../Activities/Teambuilding';
-import { poolPartiesTotalPrice } from '../Activities/PoolParties';
+
 import {AppContext} from '../AppContext'
-import { groupType } from '../RetreatSelection/RetreatType';
 
 function getFormattedPrice(price) {
     return `${price.toFixed(2)}`;
 }
 
 let sideBarClass = 'estimate-sidebar';
-let groupPrice = 0;
-let groupSizeString = "";
+
 
 function FooterApp() {
     const context = useContext(AppContext);
@@ -33,12 +29,12 @@ function FooterApp() {
         horseProgramstotalSum, horseProgramstotalGroupSum,
         poolPartytotalSum, poolPartytotalGroupSum, 
         totalGroupPrice, setTotalGroupPrice,
-        selectedHighAdventureItems, setSelectedHighAdventureItems,
-        selectedHorseProgramsItems, setSelectedHorseProgramsItems,
-        selectedWildLifeItems, setSelectedWildLifeItems,
-        selectedTeamBuildingItems, setSelectedTeamBuildingItems,
-        selectedGeneralRecreationItems, setSelectedGeneralRecreationItems,
-        selectedPoolPartyItems, setSelectedPoolPartyItems
+        selectedHighAdventureItems,
+        selectedHorseProgramsItems,
+        selectedWildLifeItems,
+        selectedTeamBuildingItems, 
+        selectedGeneralRecreationItems,
+        selectedPoolPartyItems,
     } = context;
     
     const highAdvActArray = selectedHighAdventureItems['HighAdventure'];

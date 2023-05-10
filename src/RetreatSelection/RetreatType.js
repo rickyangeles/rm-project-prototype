@@ -35,7 +35,7 @@ const RetreatTypeApp = () => {
                             <Form.Group as={Col} controlId="retreat-type">
                                 <Form.Label>Select Event Type</Form.Label>
                                 <Form.Control as="select" onChange={onTypeChange}>
-                                    <option id="type" value="none">Event Type:</option>
+                                    <option id="type" value="none">Select Event Type</option>
                                     <option defaultValue id="day" value="day">Day Group</option>
                                     <option id="overnight" value="overnight">Overnight Group</option>
                                 </Form.Control>

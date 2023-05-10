@@ -1,9 +1,6 @@
-import React, { useEffect, useMemo, useState, useContext } from 'react';
-import axios from 'axios';
+import React, { useContext } from 'react';
+
 import { AppContext } from '../AppContext';
-import { isOvernight } from '../RetreatSelection/RetreatType';
-import { Link } from 'react-scroll';
-import NumberFormat from 'react-number-format';
 
 
 function Totals() {

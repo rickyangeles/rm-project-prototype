@@ -1,12 +1,8 @@
-import React, { useState, useEffect, useContext} from 'react';
+import React, { useState, useContext} from 'react';
 import { Row, Col, Container } from 'react-bootstrap';
-
 import './App.css';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
-import axios from 'axios';
-
 import HeadingApp from './RetreatSelection/Heading';
 import RetreatSizeApp from './RetreatSelection/RetreatSize';
 import RetreatTypeApp from './RetreatSelection/RetreatType';
@@ -20,9 +16,7 @@ import PoolPartiesApp from './Activities/PoolParties';
 import LargeGroupsApp from './Activities/LargeGroups';
 import NothingSelectedApp from './Activities/NothingSelected';
 
-import FormApp from './Form/Form';
 import FooterApp from './Footer/Footer';
-import { isOvernight } from './RetreatSelection/RetreatType';
 import {AppContext} from './AppContext';
 
 
@@ -101,10 +95,6 @@ function App() {
         poolPartytotalGroupSum,         setPoolPartytotalGroupSum,
 
         totalGroupPrice,                setTotalGroupPrice,
-        highAdventure,                  setHighAdventure,
-        horsePrograms,                  setHorsePrograms,
-        teamBuilding,                   setTeamBuilding,
-        generalRecreation,              setGeneralRecreation,
 
         selectedHighAdventureItems,     setSelectedHighAdventureItems,
         selectedGeneralRecreationItems, setSelectedGeneralRecreationItems,
@@ -123,11 +113,11 @@ function App() {
                         <Col className="heading-intro" sm="12" lg="3">
                             <HeadingApp />
                         </Col>
-                        <Col className="retreat-size" sm="12" lg="3">
-                            <RetreatSizeApp />
-                        </Col>
                         <Col className="event-type" sm="12" lg="3">
                             <RetreatEventTypeApp />
+                        </Col>
+                        <Col className="retreat-size" sm="12" lg="3">
+                            <RetreatSizeApp />
                         </Col>
                         <Col className="retreat-type" sm="12" lg="3">
                             <RetreatTypeApp />
@@ -138,7 +128,7 @@ function App() {
                     </div>
                     <Row>
                         <Col sm="12" lg="8">
-                            {groupSize === 0 || groupType === 0 || groupEventType == 0 ? <NothingSelectedApp /> : null }
+                            {groupSize === 0 || groupType === 0 || groupEventType === 0 ? <NothingSelectedApp /> : null }
                             <HighAdventureApp />
                             <TeambuildingApp />
                             <WildlifeCenterApp />

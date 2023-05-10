@@ -26,7 +26,7 @@ const RetreatEventTypeApp = () => {
                             <Form.Group as={Col} controlId="event-type">
                                 <Form.Label>Select Group Type</Form.Label>
                                 <Form.Control as="select" onChange={onEventTypeChange}>
-                                    <option id="type" value="none">Event Type:</option>
+                                    <option id="type" value="none">Select Group Type</option>
                                     <option value="Team Building">Team Building</option>
                                     <option value="School Field Trip">School Field Trip</option>
                                     <option value="Family/Friends Outing">Family/Friends Outing</option>
